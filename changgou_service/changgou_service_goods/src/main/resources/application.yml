@@ -1,0 +1,36 @@
+server:
+  port: 9011
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:6868/eureka
+spring:
+  application:
+    name: changgou_goods
+  datasource:
+    username: root
+    password: 990206
+    url: jdbc:mysql://10.211.55.6:3308/changgou_goods?serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+feign:
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      excution:
+        timeout:
+          # 如果enabled设置为false,则请求超时交给ribbon控制
+          enabled: true
+        isolation:
+          strategy: SEMAPHORE
+
+# mybatis plus配置
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-value: 1
+      logic-not-delete-value: 0
