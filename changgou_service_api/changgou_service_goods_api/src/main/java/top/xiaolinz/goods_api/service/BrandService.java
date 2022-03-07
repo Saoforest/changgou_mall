@@ -47,5 +47,12 @@ public interface BrandService extends IService<Brand> {
 	 */
 	void deleteBrand(Integer id);
 
+	/**
+	 * 条件查询品牌
+	 * @param brand 品牌条件信息
+	 * @return 查询到的品牌集
+	 */
+	List<Brand> findBrandByConditions(Brand brand);
+
 }
 

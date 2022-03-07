@@ -3,6 +3,7 @@ package top.xiaolinz.common.utils;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import io.swagger.annotations.ApiModel;
 import org.apache.http.HttpStatus;
 
 import java.util.LinkedHashMap;
@@ -13,6 +14,7 @@ import java.util.Map;
  *
  * @author Xiaolin
  */
+@ApiModel(value = "统一返回封装类",parent = LinkedHashMap.class)
 public class R extends LinkedHashMap<String, Object> {
     private static final long serialVersionUID = 1L;
 

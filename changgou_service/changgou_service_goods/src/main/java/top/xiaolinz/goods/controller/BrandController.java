@@ -84,4 +84,16 @@ public class BrandController {
 
 		return R.ok(StatusCode.OK, "删除成功");
 	}
+
+
+	@GetMapping("/info")
+	@ApiOperation(value = "多条件查询品牌",httpMethod = "GET")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "brand",value = "品牌信息",dataTypeClass = Brand.class,required = true)
+	})
+	public R findBrandByConditions(Brand brand){
+		final List<Brand> brandList = this.brandService.findBrandByConditions(brand);
+
+		return R.ok(StatusCode.OK,"查询成功").put("data",brandList);
+	}
 }
