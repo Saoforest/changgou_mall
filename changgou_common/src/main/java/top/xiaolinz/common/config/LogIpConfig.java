@@ -8,6 +8,13 @@ import org.slf4j.LoggerFactory;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+
+/**
+ * @author XiaoLin
+ * @date 2022/3/6 13:56
+ * @blog https://www.xiaolinz.top/
+ **/
+
 public class LogIpConfig extends ClassicConverter {
   private static final Logger logger = LoggerFactory.getLogger(LogIpConfig.class);
   private static String webIP;

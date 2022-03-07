@@ -1,4 +1,4 @@
-package top.xiaolinz.goods.config;
+package top.xiaolinz.common.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;

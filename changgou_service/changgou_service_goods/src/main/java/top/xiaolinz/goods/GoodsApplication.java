@@ -14,11 +14,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @date 2022/3/6 13:38
  * @blog https://www.xiaolinz.top/
  **/
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "top.xiaolinz")
 @EnableEurekaClient
 @EnableDiscoveryClient
 @MapperScan(basePackages = {"top.xiaolinz.goods.mapper"})
-@ComponentScan("top.xiaolinz")
 public class GoodsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(GoodsApplication.class,args);

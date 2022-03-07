@@ -1,8 +1,10 @@
 package top.xiaolinz.common.utils;
 
 /**
- * 返回结果实体类
- */
+ * @author XiaoLin
+ * @date 2022/3/6 13:56
+ * @blog https://www.xiaolinz.top/
+ **/
 public class Result<T> {
 
     private boolean flag;//是否成功

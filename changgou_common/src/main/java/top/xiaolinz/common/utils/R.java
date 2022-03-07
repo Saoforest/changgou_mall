@@ -10,10 +10,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * 返回数据
- *
- * @author Xiaolin
- */
+ * @author XiaoLin
+ * @date 2022/3/6 13:56
+ * @blog https://www.xiaolinz.top/
+ **/
+
 @ApiModel(value = "统一返回封装类",parent = LinkedHashMap.class)
 public class R extends LinkedHashMap<String, Object> {
     private static final long serialVersionUID = 1L;

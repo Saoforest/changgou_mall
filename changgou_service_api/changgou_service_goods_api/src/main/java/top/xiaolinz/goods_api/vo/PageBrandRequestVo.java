@@ -13,9 +13,9 @@ import lombok.Data;
 @ApiModel(value = "分页查询封装类")
 public class PageBrandRequestVo {
 	@ApiModelProperty(value = "当前页数")
-	private Integer page;
+	private String page;
 	@ApiModelProperty(value = "显示个数")
-	private Integer limit;
+	private String limit;
 	@ApiModelProperty(value = "需要查询的名字条件")
 	private String name;
 	@ApiModelProperty(value = "需要查询的首字母条件")

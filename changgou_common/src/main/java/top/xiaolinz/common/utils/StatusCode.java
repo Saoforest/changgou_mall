@@ -1,8 +1,11 @@
 package top.xiaolinz.common.utils;
 
 /**
- * 返回码
- */
+ * @author XiaoLin
+ * @date 2022/3/6 13:56
+ * @blog https://www.xiaolinz.top/
+ **/
+
 public class StatusCode {
 
     public static final int OK=20000;//成功

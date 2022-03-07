@@ -81,7 +81,7 @@ public class BrandController {
 
 	@GetMapping("/info")
 	@ApiOperation(value = "多条件查询品牌")
-	public R findBrandByConditions(@RequestParam Brand brand){
+	public R findBrandByConditions(Brand brand){
 		final List<Brand> brandList = this.brandService.findBrandByConditions(brand);
 
 		return R.ok(StatusCode.OK,"查询成功").put("data",brandList);
@@ -89,14 +89,15 @@ public class BrandController {
 
 	@GetMapping("/page")
 	@ApiOperation(value = "分页查询")
-	public R findByPage(@RequestParam PageBrandRequestVo brandVo){
+	public R findByPage(PageBrandRequestVo brandVo){
 		final PageResult<Brand> page = this.brandService.findByPage(brandVo);
 
 		return R.ok(StatusCode.OK,"查询成功").put("data",page);
 	}
 
 	@GetMapping("/page/info")
-	public R findByPageAndConditions(@RequestParam PageBrandRequestVo vo){
+	@ApiOperation(value = "条件分页查询")
+	public R findByPageAndConditions(PageBrandRequestVo vo){
 		final PageResult<Brand> data = this.brandService.findByPageAndCondition(vo);
 
 		return R.ok(StatusCode.OK,"查询成功").put("data",data);
