@@ -33,7 +33,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "tb_brand")
-@ApiModel
+@ApiModel(value = "品牌映射类")
 public class Brand implements Serializable {
 	/**
 	 * 品牌id

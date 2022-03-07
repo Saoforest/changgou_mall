@@ -1,4 +1,6 @@
-package top.xiaolinz.common.utils;
+package top.xiaolinz.common_db.utils;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+
 import java.util.List;
 public class PageResult<T> {
 
@@ -11,6 +13,11 @@ public class PageResult<T> {
     }
 
     public PageResult() {
+    }
+
+    public PageResult(IPage<T> page){
+        this.total = page.getTotal();
+        this.rows = page.getRecords();
     }
 
     public Long getTotal() {

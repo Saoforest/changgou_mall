@@ -1,7 +1,9 @@
 package top.xiaolinz.goods_api.service;
 
+import top.xiaolinz.common_db.utils.PageResult;
 import top.xiaolinz.goods_api.entity.Brand;
 import com.baomidou.mybatisplus.extension.service.IService;
+import top.xiaolinz.goods_api.vo.PageBrandRequestVo;
 
 import java.util.List;
 
@@ -54,5 +56,20 @@ public interface BrandService extends IService<Brand> {
 	 */
 	List<Brand> findBrandByConditions(Brand brand);
 
+
+	/**
+	 * 分页查询
+	 *
+	 * @param vo 条件封装
+	 * @return 分页数据
+	 */
+	PageResult<Brand> findByPage(PageBrandRequestVo vo);
+
+	/**
+	 * 分页条件查询
+	 * @param vo 条件封装
+	 * @return 结果集
+	 */
+	PageResult<Brand> findByPageAndCondition(PageBrandRequestVo vo);
 }
 

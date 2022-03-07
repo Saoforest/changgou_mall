@@ -14,11 +14,26 @@
     <properties>
         <lombok.version>1.18.22</lombok.version>
         <hutool.version>5.7.21</hutool.version>
-        <swagger.version>2.9.2</swagger.version>
+        <swagger.version>3.0.0</swagger.version>
         <validation.version>2.6.4</validation.version>
+        <swagger-bootstrap-ui.version>1.9.6</swagger-bootstrap-ui.version>
+        <knife4j-spring-boot-starter.version>3.0.3
+        </knife4j-spring-boot-starter.version>
     </properties>
 
     <dependencies>
+        <!--    swagger-ui    -->
+<!--        <dependency>-->
+<!--            <groupId>com.github.xiaoymin</groupId>-->
+<!--            <artifactId>swagger-bootstrap-ui</artifactId>-->
+<!--            <version>${swagger-bootstrap-ui.version}</version>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <!--在引用时请在maven中央仓库搜索3.X最新版本号-->
+            <version>${knife4j-spring-boot-starter.version}</version>
+        </dependency>
         <!--    数据校验起步依赖    -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -66,16 +81,22 @@
             <scope>compile</scope>
         </dependency>
 
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${swagger.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${swagger.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.springfox</groupId>-->
+<!--            <artifactId>springfox-swagger2</artifactId>-->
+<!--            <version>${swagger.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>io.springfox</groupId>-->
+<!--            <artifactId>springfox-swagger-ui</artifactId>-->
+<!--            <version>${swagger.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>io.springfox</groupId>-->
+<!--            <artifactId>springfox-boot-starter</artifactId>-->
+<!--            <version>${swagger.version}</version>-->
+<!--        </dependency>-->
+
 
         <dependency>
             <groupId>org.apache.commons</groupId>

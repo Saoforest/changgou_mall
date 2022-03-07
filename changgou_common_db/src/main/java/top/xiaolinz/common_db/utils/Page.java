@@ -1,4 +1,4 @@
-package top.xiaolinz.common.utils;
+package top.xiaolinz.common_db.utils;
 
 import java.io.Serializable;
 import java.util.List;
