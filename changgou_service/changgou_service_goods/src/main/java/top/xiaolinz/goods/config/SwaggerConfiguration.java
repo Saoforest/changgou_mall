@@ -19,7 +19,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * swagger 配置
  **/
 @Configuration
-@EnableSwagger2
 public class SwaggerConfiguration {
 	@Bean
 	public Docket createRestApi() {
@@ -27,6 +26,6 @@ public class SwaggerConfiguration {
 	}
 
 	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder().title("畅购商城商品模块文档").description("畅购商城商品模块").contact(new Contact("Yangkai.Shen", "https://www.xiaolinz.top", "a1051541160@qq.com")).version("1.0.0-SNAPSHOT").build();
+		return new ApiInfoBuilder().title("畅购商城商品文档").description("畅购商城").contact(new Contact("Yangkai.Shen", "https://www.xiaolinz.top", "a1051541160@qq.com")).version("1.0.0-SNAPSHOT").build();
 	}
 }

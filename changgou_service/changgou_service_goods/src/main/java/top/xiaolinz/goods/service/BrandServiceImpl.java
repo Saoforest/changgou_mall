@@ -29,5 +29,20 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
 		return brand;
 
 	}
+
+	@Override
+	public void addBrand(Brand brand) {
+		this.save(brand);
+	}
+
+	@Override
+	public void updateBrand(Brand brand) {
+		this.updateById(brand);
+	}
+
+	@Override
+	public void deleteBrand(Integer id) {
+		this.removeById(id);
+	}
 }
 

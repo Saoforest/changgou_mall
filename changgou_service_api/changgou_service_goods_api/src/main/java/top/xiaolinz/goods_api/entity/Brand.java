@@ -9,6 +9,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.validation.annotation.Validated;
+import top.xiaolinz.common.group.UpdateGroup;
+
+import javax.validation.constraints.NotNull;
 
 /**
 * 
@@ -31,6 +35,7 @@ public class Brand implements Serializable {
 	 * 品牌id
 	 */
 	@TableId(value = "id", type = IdType.AUTO)
+	@NotNull(message = "id必须有值!",groups = {UpdateGroup.class})
 	private Integer id;
 
 	/**

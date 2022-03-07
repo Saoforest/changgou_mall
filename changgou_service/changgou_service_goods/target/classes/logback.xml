@@ -116,7 +116,7 @@
 	<logger name="java.sql.PreparedStatement" level="DEBUG"/>
 	<logger name="com.netflix.discovery" additivity="true" level="ERROR"/>
 	<!-- 生产环境，将此级别配置为适合的级别，以名日志文件太多或影响程序性能 -->
-	<root level="INFO">
+	<root level="WARN">
 		<appender-ref ref="rollingFileConsole"/>
 		<appender-ref ref="rollingFileInfo"/>
 		<appender-ref ref="rollingFileError"/>

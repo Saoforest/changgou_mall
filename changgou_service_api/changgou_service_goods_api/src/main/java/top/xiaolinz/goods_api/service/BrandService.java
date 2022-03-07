@@ -27,5 +27,25 @@ public interface BrandService extends IService<Brand> {
 	 */
 	Brand findBrandById(Integer id);
 
+
+	/**
+	 * 添加品牌
+	 * @param brand 品牌信息
+	 */
+	void addBrand(Brand brand);
+
+	/**
+	 * 修改品牌
+	 * @param brand 品牌对象
+	 */
+	void updateBrand(Brand brand);
+
+
+	/**
+	 * 删除品牌
+	 * @param id 品牌id
+	 */
+	void deleteBrand(Integer id);
+
 }
 
