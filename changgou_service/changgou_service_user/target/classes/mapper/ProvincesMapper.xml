@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.xiaolinz.user.mapper.ProvincesMapper">
+  <resultMap id="BaseResultMap" type="top.xiaolinz.user_api.entity.Provinces">
+    <!--@mbg.generated-->
+    <!--@Table tb_provinces-->
+    <id column="provinceid" jdbcType="VARCHAR" property="provinceid" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    provinceid, province
+  </sql>
+</mapper>

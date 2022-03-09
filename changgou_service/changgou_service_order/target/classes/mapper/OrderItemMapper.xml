@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.xiaolinz.order.mapper.OrderItemMapper">
+  <resultMap id="BaseResultMap" type="top.xiaolinz.order_api.entity.OrderItem">
+    <!--@mbg.generated-->
+    <!--@Table tb_order_item-->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="category_id1" jdbcType="INTEGER" property="categoryId1" />
+    <result column="category_id2" jdbcType="INTEGER" property="categoryId2" />
+    <result column="category_id3" jdbcType="INTEGER" property="categoryId3" />
+    <result column="spu_id" jdbcType="VARCHAR" property="spuId" />
+    <result column="sku_id" jdbcType="VARCHAR" property="skuId" />
+    <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="price" jdbcType="INTEGER" property="price" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="money" jdbcType="INTEGER" property="money" />
+    <result column="pay_money" jdbcType="INTEGER" property="payMoney" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="weight" jdbcType="INTEGER" property="weight" />
+    <result column="post_fee" jdbcType="INTEGER" property="postFee" />
+    <result column="is_return" jdbcType="CHAR" property="isReturn" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, category_id1, category_id2, category_id3, spu_id, sku_id, order_id, `name`, price, 
+    num, money, pay_money, image, weight, post_fee, is_return
+  </sql>
+</mapper>

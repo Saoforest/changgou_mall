@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.xiaolinz.user.mapper.SkuMapper">
+  <resultMap id="BaseResultMap" type="top.xiaolinz.user_api.entity.Sku">
+    <!--@mbg.generated-->
+    <!--@Table tb_sku-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="sn" jdbcType="VARCHAR" property="sn" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="price" jdbcType="INTEGER" property="price" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="alert_num" jdbcType="INTEGER" property="alertNum" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="images" jdbcType="VARCHAR" property="images" />
+    <result column="weight" jdbcType="INTEGER" property="weight" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="spu_id" jdbcType="BIGINT" property="spuId" />
+    <result column="category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="brand_name" jdbcType="VARCHAR" property="brandName" />
+    <result column="spec" jdbcType="VARCHAR" property="spec" />
+    <result column="sale_num" jdbcType="INTEGER" property="saleNum" />
+    <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
+    <result column="status" jdbcType="CHAR" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, sn, `name`, price, num, alert_num, image, images, weight, create_time, update_time, 
+    spu_id, category_id, category_name, brand_name, spec, sale_num, comment_num, `status`
+  </sql>
+</mapper>

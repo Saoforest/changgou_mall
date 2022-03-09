@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.xiaolinz.order.mapper.ReturnOrderMapper">
+  <resultMap id="BaseResultMap" type="top.xiaolinz.order_api.entity.ReturnOrder">
+    <!--@mbg.generated-->
+    <!--@Table tb_return_order-->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="order_id" jdbcType="BIGINT" property="orderId" />
+    <result column="apply_time" jdbcType="TIMESTAMP" property="applyTime" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="user_account" jdbcType="VARCHAR" property="userAccount" />
+    <result column="linkman" jdbcType="VARCHAR" property="linkman" />
+    <result column="linkman_mobile" jdbcType="VARCHAR" property="linkmanMobile" />
+    <result column="type" jdbcType="CHAR" property="type" />
+    <result column="return_money" jdbcType="INTEGER" property="returnMoney" />
+    <result column="is_return_freight" jdbcType="CHAR" property="isReturnFreight" />
+    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="dispose_time" jdbcType="TIMESTAMP" property="disposeTime" />
+    <result column="return_cause" jdbcType="INTEGER" property="returnCause" />
+    <result column="evidence" jdbcType="VARCHAR" property="evidence" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="admin_id" jdbcType="INTEGER" property="adminId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, order_id, apply_time, user_id, user_account, linkman, linkman_mobile, `type`, 
+    return_money, is_return_freight, `status`, dispose_time, return_cause, evidence, 
+    description, remark, admin_id
+  </sql>
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.xiaolinz.order.mapper.UndoLogMapper">
+  <resultMap id="BaseResultMap" type="top.xiaolinz.order_api.entity.UndoLog">
+    <!--@mbg.generated-->
+    <!--@Table undo_log-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="branch_id" jdbcType="BIGINT" property="branchId" />
+    <result column="xid" jdbcType="VARCHAR" property="xid" />
+    <result column="rollback_info" jdbcType="BLOB" property="rollbackInfo" />
+    <result column="log_status" jdbcType="INTEGER" property="logStatus" />
+    <result column="log_created" jdbcType="TIMESTAMP" property="logCreated" />
+    <result column="log_modified" jdbcType="TIMESTAMP" property="logModified" />
+    <result column="ext" jdbcType="VARCHAR" property="ext" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, branch_id, xid, rollback_info, log_status, log_created, log_modified, ext
+  </sql>
+</mapper>

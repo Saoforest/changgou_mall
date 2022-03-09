@@ -18,6 +18,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableEurekaClient
 @EnableDiscoveryClient
 @MapperScan(basePackages = {"top.xiaolinz.goods.mapper"})
+@ComponentScan("top.xiaolinz")
 public class GoodsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(GoodsApplication.class,args);

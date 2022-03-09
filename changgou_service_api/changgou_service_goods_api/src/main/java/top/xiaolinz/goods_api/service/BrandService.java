@@ -71,5 +71,12 @@ public interface BrandService extends IService<Brand> {
 	 * @return 结果集
 	 */
 	PageResult<Brand> findByPageAndCondition(PageBrandRequestVo vo);
+
+	/**
+	 * 根据分类名字查询品牌集
+	 * @param categoryName 分类名字
+	 * @return 品牌集合
+	 */
+	List<Brand> findBrandListByCategoryName(String categoryName);
 }
 

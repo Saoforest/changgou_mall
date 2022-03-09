@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.xiaolinz.config.mapper.AddressMapper">
+  <resultMap id="BaseResultMap" type="top.xiaolinz.config_api.entity.Address">
+    <!--@mbg.generated-->
+    <!--@Table tb_address-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="provinceid" jdbcType="VARCHAR" property="provinceid" />
+    <result column="cityid" jdbcType="VARCHAR" property="cityid" />
+    <result column="areaid" jdbcType="VARCHAR" property="areaid" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="contact" jdbcType="VARCHAR" property="contact" />
+    <result column="is_default" jdbcType="VARCHAR" property="isDefault" />
+    <result column="alias" jdbcType="VARCHAR" property="alias" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, username, provinceid, cityid, areaid, phone, address, contact, is_default, `alias`
+  </sql>
+</mapper>

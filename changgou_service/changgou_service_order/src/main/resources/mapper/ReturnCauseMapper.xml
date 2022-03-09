@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.xiaolinz.order.mapper.ReturnCauseMapper">
+  <resultMap id="BaseResultMap" type="top.xiaolinz.order_api.entity.ReturnCause">
+    <!--@mbg.generated-->
+    <!--@Table tb_return_cause-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="cause" jdbcType="VARCHAR" property="cause" />
+    <result column="seq" jdbcType="INTEGER" property="seq" />
+    <result column="status" jdbcType="CHAR" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, cause, seq, `status`
+  </sql>
+</mapper>

@@ -15,9 +15,15 @@
         <mybatis-plus.version>3.5.1</mybatis-plus.version>
         <mapper-spring-boot.version>2.1.5</mapper-spring-boot.version>
         <pagehelper.version>1.2.10</pagehelper.version>
+        <druid.version>1.2.8</druid.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
         <dependency>
             <groupId>top.xiaolinz</groupId>
             <artifactId>changgou_common</artifactId>

@@ -12,6 +12,13 @@ spring:
     password: 990206
     url: jdbc:mysql://10.211.55.6:3308/changgou_goods?serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      min-idle: 25
+      max-active: 50
+      filter:
+        commons-log:
+          enabled: true
 feign:
   hystrix:
     enabled: true
@@ -36,3 +43,7 @@ mybatis-plus:
       logic-not-delete-value: 0
 knife4j:
   enable: true
+  setting:
+    enableFooter: false
+    enableFooterCustom: true
+    footerCustomContent: Apache License 2.0 | Copyright  2022-[XiaoLin](https://www.xiaolinz.top)

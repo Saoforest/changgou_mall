@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.xiaolinz.order.mapper.CategoryReportMapper">
+  <resultMap id="BaseResultMap" type="top.xiaolinz.order_api.entity.CategoryReport">
+    <!--@mbg.generated-->
+    <!--@Table tb_category_report-->
+    <id column="category_id1" jdbcType="INTEGER" property="categoryId1" />
+    <id column="category_id2" jdbcType="INTEGER" property="categoryId2" />
+    <id column="category_id3" jdbcType="INTEGER" property="categoryId3" />
+    <id column="count_date" jdbcType="DATE" property="countDate" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="money" jdbcType="INTEGER" property="money" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    category_id1, category_id2, category_id3, count_date, num, money
+  </sql>
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.xiaolinz.order.mapper.OrderConfigMapper">
+  <resultMap id="BaseResultMap" type="top.xiaolinz.order_api.entity.OrderConfig">
+    <!--@mbg.generated-->
+    <!--@Table tb_order_config-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="order_timeout" jdbcType="INTEGER" property="orderTimeout" />
+    <result column="seckill_timeout" jdbcType="INTEGER" property="seckillTimeout" />
+    <result column="take_timeout" jdbcType="INTEGER" property="takeTimeout" />
+    <result column="service_timeout" jdbcType="INTEGER" property="serviceTimeout" />
+    <result column="comment_timeout" jdbcType="INTEGER" property="commentTimeout" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, order_timeout, seckill_timeout, take_timeout, service_timeout, comment_timeout
+  </sql>
+</mapper>

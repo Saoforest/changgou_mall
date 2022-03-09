@@ -14,4 +14,8 @@
     <!--@mbg.generated-->
     id, `name`, `options`, seq, template_id
   </sql>
+
+  <select id="findSpecListByCategoryName" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from tb_spec t1 join tb_template t2 on t1.template_id = t2.id join tb_category t3 on t2.id = t3.template_id ${ew.customSqlSegment}
+  </select>
 </mapper>

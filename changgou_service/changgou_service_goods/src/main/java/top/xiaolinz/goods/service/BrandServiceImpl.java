@@ -107,5 +107,14 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
 
 		return new PageResult<Brand>(page);
 	}
+
+	@Override
+	public List<Brand> findBrandListByCategoryName(String categoryName) {
+
+		final QueryWrapper<Brand> wrapper = new QueryWrapper<Brand>().eq("t3.name", categoryName);
+		final List<Brand> brandList = baseMapper.findBrandListByCategoryName(wrapper);
+
+		return brandList;
+	}
 }
 

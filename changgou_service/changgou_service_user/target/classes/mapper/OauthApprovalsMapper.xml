@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.xiaolinz.user.mapper.OauthApprovalsMapper">
+  <resultMap id="BaseResultMap" type="top.xiaolinz.user_api.entity.OauthApprovals">
+    <!--@mbg.generated-->
+    <!--@Table oauth_approvals-->
+    <result column="userId" jdbcType="VARCHAR" property="userid" />
+    <result column="clientId" jdbcType="VARCHAR" property="clientid" />
+    <result column="scope" jdbcType="VARCHAR" property="scope" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="expiresAt" jdbcType="TIMESTAMP" property="expiresat" />
+    <result column="lastModifiedAt" jdbcType="TIMESTAMP" property="lastmodifiedat" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    userId, clientId, `scope`, `status`, expiresAt, lastModifiedAt
+  </sql>
+</mapper>

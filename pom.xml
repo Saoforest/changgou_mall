@@ -12,6 +12,7 @@
         <module>changgou_eureka</module>
         <module>changgou_common</module>
         <module>changgou_common_db</module>
+
     </modules>
 
 <!--    <parent>-->

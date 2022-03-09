@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.xiaolinz.system.mapper.ResourceMenuMapper">
+  <resultMap id="BaseResultMap" type="top.xiaolinz.system_api.entity.ResourceMenu">
+    <!--@mbg.generated-->
+    <!--@Table tb_resource_menu-->
+    <id column="resource_id" jdbcType="INTEGER" property="resourceId" />
+    <id column="menu_id" jdbcType="VARCHAR" property="menuId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    resource_id, menu_id
+  </sql>
+</mapper>

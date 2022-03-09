@@ -15,7 +15,7 @@ import java.util.Map;
  * @blog https://www.xiaolinz.top/
  **/
 
-@ApiModel(value = "统一返回封装类",parent = LinkedHashMap.class)
+@ApiModel(value = "统一返回封装类")
 public class R extends LinkedHashMap<String, Object> {
     private static final long serialVersionUID = 1L;
 

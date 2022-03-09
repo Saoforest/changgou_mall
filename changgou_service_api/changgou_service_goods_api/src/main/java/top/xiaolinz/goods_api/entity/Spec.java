@@ -9,6 +9,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import top.xiaolinz.common.group.UpdateGroup;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * @author XiaoLin
@@ -24,6 +27,7 @@ public class Spec implements Serializable {
 	/**
 	 * ID
 	 */
+	@NotNull(message = "id不能为空!",groups = UpdateGroup.class)
 	@TableId(value = "id", type = IdType.AUTO)
 	private Integer id;
 

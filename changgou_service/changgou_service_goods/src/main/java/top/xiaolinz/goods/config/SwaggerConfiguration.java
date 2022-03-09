@@ -1,5 +1,7 @@
 package top.xiaolinz.goods.config;
 
+import com.github.xiaoymin.knife4j.spring.extension.OpenApiExtensionResolver;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -25,6 +27,14 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 // @EnableOpenApi
 @EnableSwagger2
 public class SwaggerConfiguration {
+
+	private final OpenApiExtensionResolver openApiExtensionResolver;
+
+	@Autowired
+	public SwaggerConfiguration(OpenApiExtensionResolver openApiExtensionResolver) {
+		this.openApiExtensionResolver = openApiExtensionResolver;
+	}
+
 	// @Bean
 	// public Docket createRestApi() {
 	// 	return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select().apis(RequestHandlerSelectors.basePackage("top.xiaolinz.goods.controller")).paths(PathSelectors.any()).build();
@@ -37,7 +47,7 @@ public class SwaggerConfiguration {
 	@Bean
 	public Docket createRestApi() {
 		final Contact contact = new Contact("XiaoLin", "https://www.xiaolinz.top", "a1051541160@qq.com");
-		Docket docket=new Docket(DocumentationType.SWAGGER_2)
+		return new Docket(DocumentationType.SWAGGER_2)
 				.apiInfo(new ApiInfoBuilder()
 						//.title("swagger-bootstrap-ui-demo RESTful APIs")
 						.description("畅购商城商品服务")
@@ -51,7 +61,7 @@ public class SwaggerConfiguration {
 				//这里指定Controller扫描包路径
 				.apis(RequestHandlerSelectors.basePackage("top.xiaolinz.goods.controller"))
 				.paths(PathSelectors.any())
-				.build();
-		return docket;
+				.build()
+				.extensions(openApiExtensionResolver.buildSettingExtensions());
 	}
 }

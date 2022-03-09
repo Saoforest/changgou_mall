@@ -1,5 +1,6 @@
 package top.xiaolinz.goods.controller;
 
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -21,6 +22,7 @@ import java.util.List;
 @RestController
 @Api(tags = "品牌接口",value = "品牌管理")
 @RequestMapping("/brand")
+@CrossOrigin //开启跨域
 public class BrandController {
 
 	@Autowired
@@ -32,6 +34,9 @@ public class BrandController {
 	 */
 	@GetMapping("/list")
 	@ApiOperation(value = "查询所有品牌")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200,message = "成功",response = R.class,responseContainer = "Map")
+	})
 	public R findAll(){
 		final List<Brand> list = brandService.findAll();
 
@@ -81,6 +86,7 @@ public class BrandController {
 
 	@GetMapping("/info")
 	@ApiOperation(value = "多条件查询品牌")
+	@ApiOperationSupport(ignoreParameters = {"id","image","seq"})
 	public R findBrandByConditions(Brand brand){
 		final List<Brand> brandList = this.brandService.findBrandByConditions(brand);
 
@@ -101,5 +107,14 @@ public class BrandController {
 		final PageResult<Brand> data = this.brandService.findByPageAndCondition(vo);
 
 		return R.ok(StatusCode.OK,"查询成功").put("data",data);
+	}
+
+	@GetMapping("/findBrand/categoryName/{name}")
+	@ApiOperation(value = "根据分类名称查询品牌列表")
+	@ApiImplicitParam(name = "name",value = "品牌名称",dataTypeClass = String.class,paramType = "path")
+	public R findBrandListByCategoryName(@PathVariable("name") String categoryName){
+		final List<Brand> list = this.brandService.findBrandListByCategoryName(categoryName);
+
+		return R.ok(StatusCode.OK,"查询成功").put("data",list);
 	}
 }
