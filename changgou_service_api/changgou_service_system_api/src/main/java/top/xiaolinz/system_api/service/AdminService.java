@@ -44,7 +44,6 @@ public interface AdminService extends IService<Admin>{
      */
     void updateAdmin(Admin admin);
 
-
     /**
      * 删除数据
      * @param id 数据id
@@ -73,4 +72,11 @@ public interface AdminService extends IService<Admin>{
      * @return 结果集
      */
     PageResult<Admin> findByPageAndCondition(PageAdminRequestVo vo);
+
+    /**
+     * 用户登录
+     * @param admin 用户参数信息
+     * @return 是否登录成功
+     */
+    public boolean login(Admin admin);
 }

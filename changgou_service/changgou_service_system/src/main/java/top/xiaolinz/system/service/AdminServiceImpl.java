@@ -1,11 +1,13 @@
 package top.xiaolinz.system.service;
 
+import cn.hutool.crypto.digest.BCrypt;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
+import javax.print.attribute.standard.NumberUp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +15,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import top.xiaolinz.common_db.constant.PageConstant;
 import top.xiaolinz.common_db.utils.PageResult;
 import top.xiaolinz.common_db.utils.Query;
+import top.xiaolinz.system.exception.Assert;
 import top.xiaolinz.system_api.entity.Admin;
 import top.xiaolinz.system.mapper.AdminMapper;
 import top.xiaolinz.system_api.service.AdminService;
@@ -43,11 +46,17 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
 	@Override
 	public void addAdmin(Admin admin) {
+		final String salt = BCrypt.gensalt();
+		admin.setPassword(BCrypt.hashpw(admin.getPassword(),salt));
 		this.save(admin);
 	}
 
 	@Override
 	public void updateAdmin(Admin admin) {
+		if (StringUtils.isNotEmpty(admin.getPassword())) {
+			final String salt = BCrypt.gensalt();
+			admin.setPassword(BCrypt.hashpw(admin.getPassword(),salt));
+        }
 		this.updateById(admin);
 	}
 
@@ -96,6 +105,17 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 		return new PageResult<Admin>(page);
 	}
 
+	@Override
+	public boolean login(Admin admin) {
+	//	1.根据用户名查询用户
+		final Admin name = this.getOne(new QueryWrapper<Admin>().eq("login_name", admin.getLoginName()));
+		if(Assert.objIsNull(name)){
+			return false;
+		}else {
+			return BCrypt.checkpw(admin.getPassword(),name.getPassword());
+        }
+
+	}
 
 
 	/**

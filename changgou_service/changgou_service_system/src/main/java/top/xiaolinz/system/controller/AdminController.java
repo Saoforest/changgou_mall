@@ -107,4 +107,15 @@ public class AdminController {
 
 		return R.ok(StatusCode.OK,"查询成功").put("data",data);
 	}
+
+	@PostMapping("/login")
+	public R login(@RequestBody Admin admin){
+		final boolean login = this.adminService.login(admin);
+
+		if (login) {
+			return R.ok(StatusCode.OK, "登录成功");
+		}else {
+			return R.error(StatusCode.ERROR, "登录失败");
+        }
+	}
 }
