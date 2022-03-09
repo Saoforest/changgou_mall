@@ -4,8 +4,9 @@
   <resultMap id="BaseResultMap" type="top.xiaolinz.system_api.entity.AdminRole">
     <!--@mbg.generated-->
     <!--@Table tb_admin_role-->
-    <id column="admin_id" jdbcType="INTEGER" property="adminId" />
-    <id column="role_id" jdbcType="INTEGER" property="roleId" />
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="admin_id" jdbcType="INTEGER" property="adminId" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->

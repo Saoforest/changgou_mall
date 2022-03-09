@@ -1,11 +1,11 @@
 server:
-  port: 9003
+  port: 9005
 spring:
   application:
-    name: config
+    name: user
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://10.211.55.6:3308/changgou_config?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://10.211.55.6:3308/changgou_user?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: 990206
   main:

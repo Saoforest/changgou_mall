@@ -4,8 +4,9 @@
   <resultMap id="BaseResultMap" type="top.xiaolinz.user_api.entity.CategoryBrand">
     <!--@mbg.generated-->
     <!--@Table tb_category_brand-->
-    <id column="category_id" jdbcType="INTEGER" property="categoryId" />
-    <id column="brand_id" jdbcType="INTEGER" property="brandId" />
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="brand_id" jdbcType="INTEGER" property="brandId" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->

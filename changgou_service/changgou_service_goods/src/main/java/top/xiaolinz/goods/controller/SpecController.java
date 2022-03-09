@@ -12,6 +12,7 @@ import top.xiaolinz.common_db.utils.PageResult;
 import top.xiaolinz.goods_api.entity.Spec;
 import top.xiaolinz.goods_api.service.SpecService;
 import top.xiaolinz.goods_api.vo.PageSpecRequestVo;
+import top.xiaolinz.goods_api.vo.SpecRespVo;
 
 import java.util.List;
 
@@ -111,4 +112,12 @@ public class SpecController {
 	}
 
 
+	@GetMapping("/categoryName/{name}")
+	@ApiOperation(value = "根据分类名称查询规格")
+	@ApiImplicitParam(paramType = "path",name = "name",value = "分类名称",required = true,dataTypeClass = String.class)
+	public R findByPageAndCondition(@PathVariable("name") String name){
+		final List<SpecRespVo> list = this.specService.findSpecListByCategoryName(name);
+
+		return R.ok(StatusCode.OK,"查询成功").put("data",list);
+	}
 }

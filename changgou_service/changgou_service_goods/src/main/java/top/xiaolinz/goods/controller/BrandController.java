@@ -109,7 +109,7 @@ public class BrandController {
 		return R.ok(StatusCode.OK,"查询成功").put("data",data);
 	}
 
-	@GetMapping("/findBrand/categoryName/{name}")
+	@GetMapping("/categoryName/{name}")
 	@ApiOperation(value = "根据分类名称查询品牌列表")
 	@ApiImplicitParam(name = "name",value = "品牌名称",dataTypeClass = String.class,paramType = "path")
 	public R findBrandListByCategoryName(@PathVariable("name") String categoryName){

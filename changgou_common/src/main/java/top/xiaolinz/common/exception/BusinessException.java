@@ -41,6 +41,16 @@ public class BusinessException extends RuntimeException{
      *
      * @param message 错误消息
      * @param code 错误码
+     */
+    public BusinessException(Integer code,String message) {
+        this.message = message;
+        this.code = code;
+    }
+
+    /**
+     *
+     * @param message 错误消息
+     * @param code 错误码
      * @param cause 原始异常对象
      */
     public BusinessException(String message, Integer code, Throwable cause) {

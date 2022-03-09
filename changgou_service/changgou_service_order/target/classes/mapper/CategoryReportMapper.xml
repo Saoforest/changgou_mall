@@ -4,10 +4,11 @@
   <resultMap id="BaseResultMap" type="top.xiaolinz.order_api.entity.CategoryReport">
     <!--@mbg.generated-->
     <!--@Table tb_category_report-->
-    <id column="category_id1" jdbcType="INTEGER" property="categoryId1" />
-    <id column="category_id2" jdbcType="INTEGER" property="categoryId2" />
-    <id column="category_id3" jdbcType="INTEGER" property="categoryId3" />
-    <id column="count_date" jdbcType="DATE" property="countDate" />
+    <id column="id" javaType="INTEGER" property="id" />
+    <result column="category_id1" jdbcType="INTEGER" property="categoryId1" />
+    <result column="category_id2" jdbcType="INTEGER" property="categoryId2" />
+    <result column="category_id3" jdbcType="INTEGER" property="categoryId3" />
+    <result column="count_date" jdbcType="DATE" property="countDate" />
     <result column="num" jdbcType="INTEGER" property="num" />
     <result column="money" jdbcType="INTEGER" property="money" />
   </resultMap>

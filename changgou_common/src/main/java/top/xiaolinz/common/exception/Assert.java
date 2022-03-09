@@ -2,7 +2,9 @@ package top.xiaolinz.common.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 import top.xiaolinz.common.constant.ResponseEnum;
+import top.xiaolinz.common.utils.StatusCode;
 
 /**
  * @author XiaoLin
@@ -91,6 +93,12 @@ public class Assert {
         if (StringUtils.isEmpty(s)) {
             log.info("is empty...............");
             throw new BusinessException(responseEnum);
+        }
+    }
+
+    public static void fileIsEmpty(MultipartFile file){
+        if (file == null) {
+            throw new BusinessException("文件为空!",StatusCode.ERROR);
         }
     }
 
