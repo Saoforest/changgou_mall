@@ -23,10 +23,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @TableName(value = "tb_resource_menu")
 public class ResourceMenu implements Serializable {
-    @TableId(value = "resource_id", type = IdType.AUTO)
+
+    @TableId(value = "role_id", type = IdType.AUTO)
+    private Integer id;
+
+    @TableField(value = "resource_id")
     private Integer resourceId;
 
-    @TableId(value = "menu_id", type = IdType.AUTO)
+    @TableField(value = "menu_id")
     private String menuId;
 
     private static final long serialVersionUID = 1L;

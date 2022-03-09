@@ -24,6 +24,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @TableName(value = "tb_order")
 public class Order implements Serializable {
+
     /**
      * 订单id
      */
@@ -163,7 +164,7 @@ public class Order implements Serializable {
     private String transactionId;
 
     /**
-     * 订单状态 
+     * 订单状态
      */
     @TableField(value = "order_status")
     private String orderStatus;

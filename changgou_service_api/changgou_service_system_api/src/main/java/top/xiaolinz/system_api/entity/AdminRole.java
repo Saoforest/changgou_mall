@@ -23,16 +23,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @TableName(value = "tb_admin_role")
 public class AdminRole implements Serializable {
+    @TableId(value = "id",type = IdType.AUTO)
+    private Integer id;
     /**
      * 管理员ID
      */
-    @TableId(value = "admin_id", type = IdType.AUTO)
+    @TableField(value = "admin_id")
     private Integer adminId;
 
     /**
      * 角色ID
      */
-    @TableId(value = "role_id", type = IdType.AUTO)
+    @TableField(value = "role_id")
     private Integer roleId;
 
     private static final long serialVersionUID = 1L;

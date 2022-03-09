@@ -23,10 +23,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @TableName(value = "tb_role_resource")
 public class RoleResource implements Serializable {
-    @TableId(value = "role_id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
+
+    @TableField(value = "role_id")
     private Integer roleId;
 
-    @TableId(value = "resource_id", type = IdType.AUTO)
+    @TableField(value = "resource_id")
     private Integer resourceId;
 
     private static final long serialVersionUID = 1L;

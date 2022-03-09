@@ -24,16 +24,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @TableName(value = "tb_stock_back")
 public class StockBack implements Serializable {
+
+    @TableId(value = "id",type = IdType.AUTO)
+    private Integer id;
+
     /**
      * 订单id
      */
-    @TableId(value = "order_id", type = IdType.AUTO)
+    @TableField(value = "order_id")
     private String orderId;
 
     /**
      * SKU的id
      */
-    @TableId(value = "sku_id", type = IdType.AUTO)
+    @TableField(value = "sku_id")
     private String skuId;
 
     /**

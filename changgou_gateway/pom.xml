@@ -10,12 +10,20 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>changgou_gateway</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>changgou_gateway_system</module>
+    </modules>
 
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
+
+    <dependencies>
+
+    </dependencies>
 
 
 </project>

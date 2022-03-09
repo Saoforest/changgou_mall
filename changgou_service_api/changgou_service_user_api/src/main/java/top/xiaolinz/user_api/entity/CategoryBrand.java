@@ -23,16 +23,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @TableName(value = "tb_category_brand")
 public class CategoryBrand implements Serializable {
+
+    @TableId(value = "id",type = IdType.AUTO)
+    private Integer id;
+
     /**
      * 分类ID
      */
-    @TableId(value = "category_id", type = IdType.AUTO)
+    @TableField(value = "category_id")
     private Integer categoryId;
 
     /**
      * 品牌ID
      */
-    @TableId(value = "brand_id", type = IdType.AUTO)
+    @TableField(value = "brand_id")
     private Integer brandId;
 
     private static final long serialVersionUID = 1L;

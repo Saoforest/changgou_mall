@@ -24,28 +24,31 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @TableName(value = "tb_category_report")
 public class CategoryReport implements Serializable {
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
+
     /**
      * 1级分类
      */
-    @TableId(value = "category_id1", type = IdType.AUTO)
+    @TableField(value = "category_id1")
     private Integer categoryId1;
 
     /**
      * 2级分类
      */
-    @TableId(value = "category_id2", type = IdType.AUTO)
+    @TableField(value = "category_id2")
     private Integer categoryId2;
 
     /**
      * 3级分类
      */
-    @TableId(value = "category_id3", type = IdType.AUTO)
+    @TableField(value = "category_id3")
     private Integer categoryId3;
 
     /**
      * 统计日期
      */
-    @TableId(value = "count_date", type = IdType.AUTO)
+    @TableField(value = "count_date")
     private Date countDate;
 
     /**
