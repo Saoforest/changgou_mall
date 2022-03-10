@@ -1,13 +1,12 @@
 package top.xiaolinz.file.controller;
 
-import lombok.Data;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import top.xiaolinz.common.exception.Assert;
+import top.xiaolinz.common.exception.AssertTemplate;
 import top.xiaolinz.common.exception.BusinessException;
 import top.xiaolinz.common.utils.R;
 import top.xiaolinz.common.utils.StatusCode;
@@ -26,7 +25,7 @@ public class FileUploadController {
 	@PostMapping("/upload")
 	@SneakyThrows
 	public R upload(MultipartFile file){
-		Assert.fileIsEmpty(file);
+		AssertTemplate.fileIsEmpty(file);
 
 	//	得到文件名字
 		final String filename = file.getOriginalFilename();

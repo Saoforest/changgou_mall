@@ -13,6 +13,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${jjwt.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
@@ -22,5 +27,8 @@
             <version>0.1</version>
         </dependency>
     </dependencies>
+    <properties>
+        <jjwt.version>0.9.1</jjwt.version>
+    </properties>
 
 </project>

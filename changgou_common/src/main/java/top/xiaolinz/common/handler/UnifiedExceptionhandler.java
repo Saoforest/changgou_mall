@@ -51,6 +51,7 @@ public class UnifiedExceptionhandler {
 
 
     @ExceptionHandler(value = BusinessException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public R handleException(BusinessException e){
         log.error(e.getMessage(), e);
         return R.error(e.getCode(),e.getMessage());

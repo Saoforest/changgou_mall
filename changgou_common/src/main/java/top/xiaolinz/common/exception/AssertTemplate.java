@@ -13,7 +13,7 @@ import top.xiaolinz.common.utils.StatusCode;
  **/
 
 @Slf4j
-public class Assert {
+public class AssertTemplate {
 
     /**
      * 断言对象不为空

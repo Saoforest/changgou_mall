@@ -6,13 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.xiaolinz.common.group.UpdateGroup;
+import top.xiaolinz.common.utils.JwtUtil;
 import top.xiaolinz.common.utils.R;
 import top.xiaolinz.common.utils.StatusCode;
 import top.xiaolinz.common_db.utils.PageResult;
 import top.xiaolinz.system_api.entity.Admin;
 import top.xiaolinz.system_api.service.AdminService;
 import top.xiaolinz.system_api.vo.PageAdminRequestVo;
+
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -87,9 +91,9 @@ public class AdminController {
 	@ApiOperation(value = "多条件查询admin")
 	@ApiOperationSupport(ignoreParameters = {"id","image","seq"})
 	public R findAdminByConditions(Admin admin){
-		final List<Admin> AdminList = this.adminService.findAdminByConditions(admin);
+		final List<Admin> adminList = this.adminService.findAdminByConditions(admin);
 
-		return R.ok(StatusCode.OK,"查询成功").put("data",AdminList);
+		return R.ok(StatusCode.OK,"查询成功").put("data",adminList);
 	}
 
 	@GetMapping("/page")
@@ -113,7 +117,13 @@ public class AdminController {
 		final boolean login = this.adminService.login(admin);
 
 		if (login) {
-			return R.ok(StatusCode.OK, "登录成功");
+			final LinkedHashMap<String, Object> resMap = new LinkedHashMap<>();
+			resMap.put("login_name",admin.getLoginName());
+			final String token = JwtUtil.hutoolCreateJWT(UUID.randomUUID().toString(), admin.getLoginName(), null);
+
+			resMap.put("token",token);
+
+			return R.ok(StatusCode.OK, "登录成功").put("data",resMap);
 		}else {
 			return R.error(StatusCode.ERROR, "登录失败");
         }
