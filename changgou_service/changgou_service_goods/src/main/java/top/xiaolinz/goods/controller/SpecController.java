@@ -120,4 +120,5 @@ public class SpecController {
 
 		return R.ok(StatusCode.OK,"查询成功").put("data",list);
 	}
+
 }

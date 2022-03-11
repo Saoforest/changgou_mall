@@ -33,4 +33,12 @@
     freight_id, image, images, sale_service, introduction, spec_items, para_items, sale_num, 
     comment_num, is_marketable, is_enable_spec, is_delete, `status`
   </sql>
+
+  <select id="findSpuByIdIgnoreDelete" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from changgou_goods.tb_spu where id = #{spuId}
+  </select>
+
+  <update id="updateSpuByIdRestore">
+    update changgou_goods.tb_spu set is_delete = 0,status = #{status} where id = #{id}
+  </update>
 </mapper>

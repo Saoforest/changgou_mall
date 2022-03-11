@@ -2,6 +2,7 @@ package top.xiaolinz.common.exception;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import top.xiaolinz.common.constant.ExceptionEnum;
 import top.xiaolinz.common.constant.ResponseEnum;
 
 /**
@@ -66,6 +67,11 @@ public class BusinessException extends RuntimeException{
     public BusinessException(ResponseEnum resultCodeEnum) {
         this.message = resultCodeEnum.getMessage();
         this.code = resultCodeEnum.getCode();
+    }
+
+    public BusinessException(ExceptionEnum exceptionEnum){
+        this.message = exceptionEnum.getMsg();
+        this.code = exceptionEnum.getCode();
     }
 
     /**

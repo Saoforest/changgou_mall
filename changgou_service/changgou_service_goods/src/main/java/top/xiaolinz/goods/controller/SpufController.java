@@ -11,6 +11,7 @@ import top.xiaolinz.common.utils.StatusCode;
 import top.xiaolinz.common_db.utils.PageResult;
 import top.xiaolinz.goods_api.entity.Spu;
 import top.xiaolinz.goods_api.service.SpuService;
+import top.xiaolinz.goods_api.vo.Goods;
 import top.xiaolinz.goods_api.vo.PageSpuRequestVo;
 
 import java.util.List;
@@ -51,39 +52,39 @@ public class SpufController {
 	@ApiImplicitParams({
 			@ApiImplicitParam(value = "spuId",paramType = "path",name = "SpuId",required = true,defaultValue = "1115",dataTypeClass = Integer.class)
 	})
-	@GetMapping("/{spuId}")
-	public R findById(@PathVariable("spuId") Integer spuId){
-		final Spu spu = this.spuService.findSpuById(spuId);
+	@GetMapping("/find/{spuId}")
+	public R findById(@PathVariable("spuId") String spuId){
+		final Goods goods = this.spuService.findGoodsBySpuId(spuId);
 
-		return R.ok(StatusCode.OK,"查询成功").put("data", spu);
+		return R.ok(StatusCode.OK,"查询成功").put("data", goods);
 	}
 
 	@PostMapping("/save")
 	@ApiOperation(value = "添加spu")
-	public R addSpu(@RequestBody Spu spu){
-		this.spuService.addSpu(spu);
+	public R addSpu(@RequestBody Goods goods){
+		this.spuService.addSpuAndSku(goods);
 		return R.ok(StatusCode.OK,"添加成功");
 	}
 
 	@PutMapping("/update")
 	@ApiOperation(value = "修改spu")
-	public R updateSpu(@Validated(UpdateGroup.class) @RequestBody Spu spu){
-		this.spuService.updateSpu(spu);
+	public R updateSpu(@Validated(UpdateGroup.class) Goods goods){
+		this.spuService.updateGoods(goods);
 
 		return R.ok(StatusCode.OK,"更新成功");
 	}
 
 	@DeleteMapping("/delete/{SpuId}")
 	@ApiOperation(value = "根据id删除spu")
-	@ApiImplicitParams({@ApiImplicitParam(value = "spuid" , paramType = "path",name = "SpuId",required = true,dataTypeClass = Integer.class)})
-	public R deleteSpu(@PathVariable("SpuId") Integer spuId){
+	@ApiImplicitParams({@ApiImplicitParam(value = "spuid" , paramType = "path",name = "SpuId",required = true,dataTypeClass = String.class)})
+	public R deleteSpu(@PathVariable("SpuId") String spuId){
 		this.spuService.deleteSpu(spuId);
 
 		return R.ok(StatusCode.OK, "删除成功");
 	}
 
 
-	@GetMapping("/info")
+	@GetMapping("/find/info")
 	@ApiOperation(value = "多条件查询spu")
 	@ApiOperationSupport(ignoreParameters = {"id","image","seq"})
 	public R findSpuByConditions(Spu spu){
@@ -92,7 +93,7 @@ public class SpufController {
 		return R.ok(StatusCode.OK,"查询成功").put("data",SpuList);
 	}
 
-	@GetMapping("/page")
+	@GetMapping("/find/page")
 	@ApiOperation(value = "分页查询")
 	public R findByPage(PageSpuRequestVo spuVo){
 		final PageResult<Spu> page = this.spuService.findByPage(spuVo);
@@ -100,11 +101,45 @@ public class SpufController {
 		return R.ok(StatusCode.OK,"查询成功").put("data",page);
 	}
 
-	@GetMapping("/page/info")
+	@GetMapping("/find/page/info")
 	@ApiOperation(value = "条件分页查询")
 	public R findByPageAndConditions(PageSpuRequestVo vo){
 		final PageResult<Spu> data = this.spuService.findByPageAndCondition(vo);
 
 		return R.ok(StatusCode.OK,"查询成功").put("data",data);
+	}
+
+	@PostMapping("/audit/{spuId}")
+	@ApiOperation(value = "商品审核")
+	@ApiImplicitParam(name = "spuId",value = "spuId值",dataTypeClass = String.class,paramType = "path",required = true)
+	public R audit(@PathVariable("spuId") String spuId){
+		this.spuService.goodsAudit(spuId);
+
+		return R.ok(StatusCode.OK,"审核成功");
+	}
+
+	@PostMapping("/put/{spuId}")
+	@ApiOperation(value = "商品上架")
+	@ApiImplicitParam(name = "spuId",value = "spu编号",dataTypeClass = String.class,paramType = "path",required = true)
+	public R goodsPut(@PathVariable String spuId){
+		this.spuService.goodsPut(spuId);
+
+		return R.ok(StatusCode.OK, "上架成功");
+	}
+
+	@PostMapping("/down/{spuId}")
+	@ApiOperation(value = "商品下架")
+	@ApiImplicitParam(name = "spuId",value = "spuId",paramType = "path",dataTypeClass = String.class,required = true)
+	public R goodsDown(@PathVariable String spuId){
+		this.spuService.goodsDown(spuId);
+
+		return R.ok(StatusCode.OK, "下架成功");
+	}
+
+	@PostMapping("/restore/{spuId}")
+	public R restore(@PathVariable String spuId){
+		this.spuService.restore(spuId);
+
+		return R.ok(StatusCode.OK,"商品恢复成功");
 	}
 }

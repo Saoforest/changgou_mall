@@ -1,9 +1,7 @@
 package top.xiaolinz.goods_api.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -133,7 +131,7 @@ public class Spu implements Serializable {
 	 * 是否上架
 	 */
 	@TableField(value = "is_marketable")
-	private String isMarketable;
+	private String isMarketable = "0";
 
 	/**
 	 * 是否启用规格
@@ -144,14 +142,15 @@ public class Spu implements Serializable {
 	/**
 	 * 是否删除
 	 */
+	@TableLogic(value = "0",delval = "1")
 	@TableField(value = "is_delete")
-	private String isDelete;
+	private String isDelete = "0";
 
 	/**
 	 * 审核状态
 	 */
 	@TableField(value = "`status`")
-	private String status;
+	private String status = "0";
 
 	private static final long serialVersionUID = 1L;
 

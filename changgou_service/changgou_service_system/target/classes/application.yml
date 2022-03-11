@@ -51,3 +51,5 @@ knife4j:
     enableFooter: false
     enableFooterCustom: true
     footerCustomContent: Apache License 2.0 | Copyright  2022-[XiaoLin](https://www.xiaolinz.top)
+workerId: 0
+datacenterId: 0

@@ -108,7 +108,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 	@Override
 	public boolean login(Admin admin) {
 	//	1.根据用户名查询用户
-		final Admin name = this.getOne(new QueryWrapper<Admin>().eq("login_name", admin.getLoginName()));
+		final Admin name = this.getOne(new QueryWrapper<Admin>().eq("login_name", admin.getLoginName()).eq("status",'1'));
 		if(Assert.objIsNull(name)){
 			return false;
 		}else {

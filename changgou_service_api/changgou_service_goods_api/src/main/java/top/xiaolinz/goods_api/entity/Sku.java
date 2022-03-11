@@ -1,9 +1,7 @@
 package top.xiaolinz.goods_api.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import java.util.Date;
 import lombok.AllArgsConstructor;
@@ -140,6 +138,7 @@ public class Sku implements Serializable {
 	 * 商品状态 1-正常，2-下架，3-删除
 	 */
 	@TableField(value = "`status`")
+	@TableLogic(value = "2",delval = "3")
 	private String status;
 
 	@TableField(value = "version")

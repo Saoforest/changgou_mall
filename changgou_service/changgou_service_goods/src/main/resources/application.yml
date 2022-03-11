@@ -41,9 +41,13 @@ mybatis-plus:
       id-type: auto
       logic-delete-value: 1
       logic-not-delete-value: 0
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 knife4j:
   enable: true
   setting:
     enableFooter: false
     enableFooterCustom: true
-    footerCustomContent: Apache License 2.0 | Copyright  2022-[XiaoLin](https://www.xiaolinz.top)
+    footerCustomContent: Apache License 2.0 | Copyright  2022-[XiaoLin](https://
+workerId: 0
+datacenterId: 0
