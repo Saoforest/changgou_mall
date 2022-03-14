@@ -10,6 +10,11 @@ spring:
     password: 990206
   main:
     allow-bean-definition-overriding: true #当遇到同样名字的时候，是否允许覆盖注册
+  rabbitmq:
+    username: admin
+    password: admin
+    virtual-host: myvhost
+    host: 10.211.55.6
 eureka:
   client:
     service-url:
@@ -51,3 +56,5 @@ knife4j:
     enableFooter: false
     enableFooterCustom: true
     footerCustomContent: Apache License 2.0 | Copyright  2022-[XiaoLin](https://www.xiaolinz.top)
+workerId: 0
+datacenterId: 0

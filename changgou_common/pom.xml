@@ -34,12 +34,14 @@
             <artifactId>jjwt</artifactId>
             <version>${jjwt.version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-boot-starter</artifactId>
             <!--在引用时请在maven中央仓库搜索3.X最新版本号-->
             <version>${knife4j-spring-boot-starter.version}</version>
         </dependency>
+
         <!--    数据校验起步依赖    -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -107,6 +109,12 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-rabbit</artifactId>
         </dependency>
 
     </dependencies>

@@ -1,0 +1,17 @@
+server:
+  port: 10000
+spring:
+  application:
+    name: canal
+  rabbitmq:
+    addresses: 10.211.55.6:5672
+    virtual-host: myvhost
+    username: admin
+    password: admin
+canal:
+  server: 10.211.55.6:11111
+  destination: test
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:6868/eureka
