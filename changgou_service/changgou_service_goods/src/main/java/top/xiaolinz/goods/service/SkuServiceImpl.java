@@ -1,21 +1,22 @@
 package top.xiaolinz.goods.service;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
+
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
 import top.xiaolinz.common_db.constant.PageConstant;
 import top.xiaolinz.common_db.utils.PageResult;
 import top.xiaolinz.common_db.utils.Query;
-import top.xiaolinz.goods_api.entity.Sku;
-import top.xiaolinz.goods_api.entity.Sku;
 import top.xiaolinz.goods.mapper.SkuMapper;
+import top.xiaolinz.goods_api.entity.Sku;
 import top.xiaolinz.goods_api.service.SkuService;
 import top.xiaolinz.goods_api.vo.PageSkuRequestVo;
 
@@ -96,6 +97,16 @@ public class SkuServiceImpl extends ServiceImpl<SkuMapper, Sku> implements SkuSe
 		return new PageResult<Sku>(page);
 	}
 
+    @Override
+    public List<Sku> findSkuListBySpuId(String spuId) {
+        final QueryWrapper<Sku> wrapper = new QueryWrapper<>();
+        if ("all".equals(spuId)) {
+            wrapper.eq("status", "1");
+        } else {
+            wrapper.eq("spu_id", spuId);
+        }
+        return this.list(wrapper);
+    }
 
 
 	/**

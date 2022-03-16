@@ -16,6 +16,12 @@ spring:
 #        locator:
 #          enabled: true
       routes:
+        - id: search
+          uri: lb://search
+          predicates:
+            - Path=/search/**
+          filters:
+            - StripPrefix=1
         - id: goods
           uri: lb://goods
           predicates:

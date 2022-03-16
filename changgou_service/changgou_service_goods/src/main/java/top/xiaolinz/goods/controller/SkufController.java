@@ -1,10 +1,14 @@
 package top.xiaolinz.goods.controller;
 
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import io.swagger.annotations.*;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+
+import io.swagger.annotations.*;
 import top.xiaolinz.common.group.UpdateGroup;
 import top.xiaolinz.common.utils.R;
 import top.xiaolinz.common.utils.StatusCode;
@@ -12,8 +16,6 @@ import top.xiaolinz.common_db.utils.PageResult;
 import top.xiaolinz.goods_api.entity.Sku;
 import top.xiaolinz.goods_api.service.SkuService;
 import top.xiaolinz.goods_api.vo.PageSkuRequestVo;
-
-import java.util.List;
 
 /**
  * @author XiaoLin
@@ -107,4 +109,13 @@ public class SkufController {
 
 		return R.ok(StatusCode.OK,"查询成功").put("data",data);
 	}
+
+    @GetMapping("/list/{spuId}")
+    @ApiOperation(value = "根据spuId查询sku信息,没有则查询所有状态为正常的")
+    @ApiImplicitParam(name = "spuId", value = "spu编号", paramType = "path", dataTypeClass = String.class)
+    public R findSkuListBySpuId(@PathVariable String spuId) {
+        List<Sku> skus = this.skuService.findSkuListBySpuId(spuId);
+
+        return R.ok(StatusCode.OK, "查询成功").put("data", skus);
+    }
 }

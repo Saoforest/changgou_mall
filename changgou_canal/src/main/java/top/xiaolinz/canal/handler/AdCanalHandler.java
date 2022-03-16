@@ -1,14 +1,14 @@
 package top.xiaolinz.canal.handler;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+
+import lombok.extern.slf4j.Slf4j;
 import top.javatool.canal.client.annotation.CanalTable;
 import top.javatool.canal.client.handler.EntryHandler;
-import top.xiaolinz.canal.config.RabbitmqConfiguration;
 import top.xiaolinz.canal.entity.Ad;
+import top.xiaolinz.common.constant.RabbitmqConstant;
 
 /**
  * @author XiaoLin
@@ -34,7 +34,7 @@ public class AdCanalHandler implements EntryHandler<Ad> {
 		//	发送消息
 		if ("web_index_lb".equals(after.getPosition())) {
 			log.info("条件判断成功,开始发送消息:消息参数为{}",after.getPosition());
-			template.convertAndSend("", RabbitmqConfiguration.AD_UPDATE_QUEUE,after.getPosition());
+			this.template.convertAndSend("", RabbitmqConstant.AD_UPDATE_QUEUE, after.getPosition());
         }
 	}
 

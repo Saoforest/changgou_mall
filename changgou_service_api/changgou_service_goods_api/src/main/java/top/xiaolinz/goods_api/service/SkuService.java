@@ -1,12 +1,12 @@
 package top.xiaolinz.goods_api.service;
 
+import java.util.List;
+
+import com.baomidou.mybatisplus.extension.service.IService;
+
 import top.xiaolinz.common_db.utils.PageResult;
 import top.xiaolinz.goods_api.entity.Sku;
-import top.xiaolinz.goods_api.entity.Sku;
-import com.baomidou.mybatisplus.extension.service.IService;
 import top.xiaolinz.goods_api.vo.PageSkuRequestVo;
-
-import java.util.List;
 
 /**
  * @author XiaoLin
@@ -73,5 +73,13 @@ public interface SkuService extends IService<Sku> {
 	 */
 	PageResult<Sku> findByPageAndCondition(PageSkuRequestVo vo);
 
+    /**
+     * 根据spuId查询所有sku,如果传入参数为"all" 则查询所有已上架的商品
+     * 
+     * @param spuId
+     *            spuId
+     * @return sku集合
+     */
+    List<Sku> findSkuListBySpuId(String spuId);
 }
 

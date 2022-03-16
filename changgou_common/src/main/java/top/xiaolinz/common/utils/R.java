@@ -1,13 +1,13 @@
 package top.xiaolinz.common.utils;
 
-import cn.hutool.json.JSONUtil;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
-import io.swagger.annotations.ApiModel;
-import org.apache.http.HttpStatus;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import org.apache.http.HttpStatus;
+
+import cn.hutool.core.lang.TypeReference;
+import cn.hutool.json.JSONUtil;
+import io.swagger.annotations.ApiModel;
 
 /**
  * @author XiaoLin
@@ -22,9 +22,9 @@ public class R extends LinkedHashMap<String, Object> {
 
 
     private R() {
-        put("flag",true);
-        put("code", 0);
-        put("msg", "success");
+        this.put("flag", true);
+        this.put("code", 0);
+        this.put("msg", "success");
     }
 
     public static R error() {
@@ -85,15 +85,15 @@ public class R extends LinkedHashMap<String, Object> {
     /**
      * 使用fastjson返回任意类型对象
      */
-    public <T> T getData(String key,TypeReference<T> typeReference) {
+    public <T> T getData(String key, TypeReference<T> typeReference) {
         // 默认是map类型
         final Object data = this.get(key);
 
         if (data != null) {
-            final String json = JSON.toJSONString(data);
-            return JSON.parseObject(json, typeReference);
+            final String json = JSONUtil.toJsonStr(data);
+            return JSONUtil.toBean(json, typeReference, true);
         }
-            return JSON.parseObject("", typeReference);
+        return JSONUtil.toBean("", typeReference, true);
     }
 
     /**
