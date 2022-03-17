@@ -73,7 +73,7 @@ public class EsManagerServiceImpl implements EsManagerService {
 
                 info.setSpecMap(map);
 
-                log.info("返回的封装对象{}", info);
+                // log.info("返回的封装对象{}", info);
 
                 return info;
             }).collect(Collectors.toList());
