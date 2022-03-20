@@ -19,4 +19,6 @@ public class RabbitmqConstant {
 
     public static final String GOODS_DOWN_EXCHANGE = "goods_down_exchange";
 
+    public static final String PAGE_CREATE_QUEUE = "page_create_queue";
+
 }

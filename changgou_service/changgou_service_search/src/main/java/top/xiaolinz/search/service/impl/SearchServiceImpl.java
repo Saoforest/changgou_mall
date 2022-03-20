@@ -1,9 +1,6 @@
 package top.xiaolinz.search.service.impl;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
@@ -26,7 +23,9 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
 
-import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.lang.TypeReference;
+import cn.hutool.json.JSONUtil;
 import top.xiaolinz.search.mapper.EsRepository;
 import top.xiaolinz.search.service.SearchService;
 import top.xiaolinz.search_api.entity.SkuInfo;
@@ -49,8 +48,17 @@ public class SearchServiceImpl implements SearchService {
     public Map<String, Object> search(Map<String, String> map) {
         final HashMap<String, Object> resMap = new HashMap<>();
 
-        if (MapUtil.isNotEmpty(map)) {
+        if (map != null) {
             this.handlerSearchMap(map);
+
+            final String page = map.get("page");
+            final String size1 = map.get("size");
+            if (StringUtils.isBlank(page)) {
+                map.put("page", "1");
+            }
+            if (StringUtils.isBlank(size1)) {
+                map.put("size", "10");
+            }
             // 封装查询条件
             final NativeSearchQuery searchQuery = this.retrievalConditionStructure(map);
 
@@ -86,7 +94,8 @@ public class SearchServiceImpl implements SearchService {
             long pageSize = (totalHits + size - 1) / size;
             resMap.put("totalPages", pageSize);
             resMap.put("brandList", brandList);
-            resMap.put("skuSpecList", skuSpecList);
+            resMap.put("specList", this.formatSpecList(skuSpecList));
+            resMap.put("pageNum", map.get("page"));
 
         }
 
@@ -182,6 +191,25 @@ public class SearchServiceImpl implements SearchService {
                 }
             }
         }
+    }
+
+    private Map<String, Set<String>> formatSpecList(List<String> specList) {
+        final HashMap<String, Set<String>> map = new HashMap<>();
+        if (CollUtil.isNotEmpty(specList)) {
+            for (String s : specList) {
+                final Map<String, String> bean = JSONUtil.toBean(s, new TypeReference<Map<String, String>>() {}, true);
+                for (String key : bean.keySet()) {
+                    Set<String> set = map.get(key);
+                    if (set == null) {
+                        set = new HashSet<>();
+                    }
+                    set.add(bean.get(key));
+                    map.put(key, set);
+                }
+            }
+        }
+
+        return map;
     }
 
 }

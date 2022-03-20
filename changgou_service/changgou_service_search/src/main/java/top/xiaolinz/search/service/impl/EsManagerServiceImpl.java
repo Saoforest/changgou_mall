@@ -2,6 +2,7 @@ package top.xiaolinz.search.service.impl;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 import org.elasticsearch.index.query.QueryBuilders;
@@ -63,9 +64,10 @@ public class EsManagerServiceImpl implements EsManagerService {
     public void importAll() {
         final R r = this.skuFeign.findSkuListBySpuId("all");
         if (r.getCode() != StatusCode.ERROR) {
-            List<Sku> data = r.getData("data", new TypeReference<List<Sku>>() {});
+            CopyOnWriteArrayList<Sku> data = r.getData("data", new TypeReference<CopyOnWriteArrayList<Sku>>() {});
             Assert.notEmpty(data);
-            final List<SkuInfo> skuInfos = data.stream().map(sku -> {
+
+            final List<SkuInfo> skuInfos = data.stream().parallel().map(sku -> {
                 final SkuInfo info = new SkuInfo();
                 BeanUtils.copyProperties(sku, info);
                 final Map<String, Object> map =
@@ -78,13 +80,14 @@ public class EsManagerServiceImpl implements EsManagerService {
                 return info;
             }).collect(Collectors.toList());
 
-            final List<List<SkuInfo>> split = ListUtil.split(skuInfos, 2000);
+            final CopyOnWriteArrayList<SkuInfo> copyInfos = new CopyOnWriteArrayList<>(skuInfos);
 
-            for (List<SkuInfo> infos : split) {
-                ThreadUtil.execAsync(() -> {
-                    this.esTemplate.save(infos);
-                });
-            }
+            final List<List<SkuInfo>> split = ListUtil.split(copyInfos, 2000);
+
+            split.parallelStream().forEach(info -> ThreadUtil.execAsync(() -> {
+                this.esTemplate.save(info);
+            }));
+
         }
     }
 
@@ -92,7 +95,7 @@ public class EsManagerServiceImpl implements EsManagerService {
     public void importBySpuId(String spuId) {
         final R r = this.skuFeign.findSkuListBySpuId(spuId);
         if (r.getCode() != StatusCode.ERROR) {
-            final List<Sku> skus = r.getData("data", new TypeReference<List<Sku>>() {});
+            final CopyOnWriteArrayList<Sku> skus = r.getData("data", new TypeReference<CopyOnWriteArrayList<Sku>>() {});
             Assert.notEmpty(skus);
             final List<SkuInfo> infos = skus.stream().map(sku -> {
                 final SkuInfo info = new SkuInfo();
@@ -107,14 +110,12 @@ public class EsManagerServiceImpl implements EsManagerService {
                 return info;
             }).collect(Collectors.toList());
 
+
             final List<List<SkuInfo>> split = ListUtil.split(infos, 2000);
 
-            for (List<SkuInfo> info : split) {
-                ThreadUtil.execAsync(() -> {
-                    this.esTemplate.save(info);
-                });
-
-            }
+            split.parallelStream().forEach((info) -> ThreadUtil.execAsync(() -> {
+                this.esTemplate.save(info);
+            }));
         }
     }
 

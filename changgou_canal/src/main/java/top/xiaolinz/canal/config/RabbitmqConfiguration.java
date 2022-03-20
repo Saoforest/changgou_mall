@@ -55,4 +55,15 @@ public class RabbitmqConfiguration {
         return BindingBuilder.bind(queue).to(exchange).with("").noargs();
     }
 
+    @Bean(RabbitmqConstant.PAGE_CREATE_QUEUE)
+    public Queue pageCreateQueue() {
+        return QueueBuilder.durable(RabbitmqConstant.PAGE_CREATE_QUEUE).build();
+    }
+
+    @Bean
+    public Binding pageCreateBinding(@Qualifier(RabbitmqConstant.PAGE_CREATE_QUEUE) Queue queue,
+        @Qualifier(RabbitmqConstant.GOODS_UP_EXCHANGE) Exchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with("").noargs();
+    }
+
 }

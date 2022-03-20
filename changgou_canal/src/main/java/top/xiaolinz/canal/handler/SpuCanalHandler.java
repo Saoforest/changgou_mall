@@ -35,5 +35,11 @@ public class SpuCanalHandler implements EntryHandler<Spu> {
             log.info("条件判断成功,开始发送消息:{}", after.getId());
             this.rabbitTemplate.convertAndSend(RabbitmqConstant.GOODS_DOWN_EXCHANGE, "", after.getId());
         }
+
+        // 未审核 --> 审核
+        if ("0".equals(before.getStatus()) && "1".equals(after.getStatus())) {
+            // 发消息
+	        this.rabbitTemplate.convertAndSend(RabbitmqConstant.GOODS_UP_EXCHANGE, "", after.getId());
+        }
 	}
 }
