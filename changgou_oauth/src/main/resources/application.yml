@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: oauth
+eureka:
+  client:
+    service-url:
+      defaultZoom: http://127.0.0.1:6868/eureka

@@ -1,10 +1,14 @@
 package top.xiaolinz.goods.controller;
 
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import io.swagger.annotations.*;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+
+import io.swagger.annotations.*;
 import top.xiaolinz.common.group.UpdateGroup;
 import top.xiaolinz.common.utils.R;
 import top.xiaolinz.common.utils.StatusCode;
@@ -13,8 +17,6 @@ import top.xiaolinz.goods_api.entity.Spu;
 import top.xiaolinz.goods_api.service.SpuService;
 import top.xiaolinz.goods_api.vo.Goods;
 import top.xiaolinz.goods_api.vo.PageSpuRequestVo;
-
-import java.util.List;
 
 /**
  * @author XiaoLin
@@ -58,6 +60,13 @@ public class SpufController {
 
 		return R.ok(StatusCode.OK,"查询成功").put("data", goods);
 	}
+
+    @GetMapping("/find/spu/{spuId}")
+    public R findSpuById(@PathVariable("spuId") String spuId) {
+        final Spu spu = this.spuService.findSpuById(spuId);
+
+        return R.ok(StatusCode.OK, "查询成功").put("data", spu);
+    }
 
 	@PostMapping("/save")
 	@ApiOperation(value = "添加spu")

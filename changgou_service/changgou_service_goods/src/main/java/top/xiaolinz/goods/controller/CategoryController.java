@@ -1,10 +1,14 @@
 package top.xiaolinz.goods.controller;
 
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import io.swagger.annotations.*;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+
+import io.swagger.annotations.*;
 import top.xiaolinz.common.group.UpdateGroup;
 import top.xiaolinz.common.utils.R;
 import top.xiaolinz.common.utils.StatusCode;
@@ -12,8 +16,6 @@ import top.xiaolinz.common_db.utils.PageResult;
 import top.xiaolinz.goods_api.entity.Category;
 import top.xiaolinz.goods_api.service.CategoryService;
 import top.xiaolinz.goods_api.vo.PageCategoryRequestVo;
-
-import java.util.List;
 
 /**
  * @author XiaoLin
@@ -23,6 +25,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/category")
 @Api(value = "分类接口",tags = {"分类接口"})
+@CrossOrigin
 public class CategoryController {
 	@Autowired
 	private CategoryService categoryService;

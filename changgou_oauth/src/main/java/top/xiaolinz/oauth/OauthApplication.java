@@ -1,20 +1,18 @@
-package top.xiaolinz.page;
+package top.xiaolinz.oauth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * @author XiaoLin
- * @date 2022/3/18 17:02
+ * @date 2022/3/21 15:56
  * @blog https://www.xiaolinz.top/
  **/
-@SpringBootApplication(scanBasePackages = "top.xiaolinz")
+@SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients("top.xiaolinz.goods_api.feign")
-public class PageApplication {
+public class OauthApplication {
     public static void main(String[] args) {
-        SpringApplication.run(PageApplication.class, args);
+        SpringApplication.run(OauthApplication.class, args);
     }
 }

@@ -1,18 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8"/>
+    <meta content="IE=9; IE=8; IE=7; IE=EDGE" http-equiv="X-UA-Compatible">
     <meta content="IE=EmulateIE7" http-equiv="X-UA-Compatible"/>
-    <title>产品列表页</title>
+    <title>畅购</title>
     <link href="/img/favicon.ico" rel="icon">
 
     <link href="/css/all.css" rel="stylesheet" type="text/css"/>
-    <link href="/css/pages-list.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/pages-item.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/pages-zoom.css" rel="stylesheet" type="text/css"/>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
 </head>
 
 <body>
-<!-- 头部栏位 -->
+
+
 <!--页面顶部-->
 <div id="nav-bottom">
     <!--顶部-->
@@ -22,10 +28,7 @@
                 <div class="shortcut">
                     <ul class="fl">
                         <li class="f-item">畅购欢迎您！</li>
-                        <li class="f-item">请<a href="login.html"
-                                               target="_blank">登录</a>　<span><a
-                                href="register.html"
-                                target="_blank">免费注册</a></span></li>
+                        <!--<li class="f-item">请<a th:href="@{'http://login.changgou.com:9200/oauth/toLogin?ReturnUrl=http://item.changgou.com:9011/items/' + ${spu.id}" >登录</a>　<span><a href="register.html" target="_blank">免费注册</a></span></li>-->
                     </ul>
                     <div class="fr typelist">
                         <ul class="types">
@@ -59,22 +62,19 @@
             <div class="py-container">
                 <div class="yui3-g Logo">
                     <div class="yui3-u Left logoArea">
-                        <a class="logo-bd" href="index.html" target="_blank"
+                        <a class="logo-bd" href="JD-index.html" target="_blank"
                            title="畅购"></a>
                     </div>
                     <div class="yui3-u Rit searchArea">
                         <div class="search">
-                            <form class="sui-form form-inline"
-                                  th:action="@{/search/list}">
+                            <form action="" class="sui-form form-inline">
                                 <!--searchAutoComplete-->
                                 <div class="input-append">
                                     <input class="input-error input-xxlarge"
                                            id="autocomplete"
-                                           name="keyword"
-                                           th:value="${#maps.containsKey(paramMap,'keyword') ? paramMap.keyword : ''}"
                                            type="text"/>
                                     <button class="sui-btn btn-xlarge btn-danger"
-                                            type="submit">搜索
+                                            type="button">搜索
                                     </button>
                                 </div>
                             </form>
@@ -82,6 +82,7 @@
                     </div>
 
                 </div>
+
 
             </div>
         </div>
@@ -805,246 +806,608 @@
         </div>
     </div>
 </div>
-<!--list-content-->
-<div class="main">
-    <div class="py-container">
-        <!--bread-->
-        <div class="bread">
-            <ul class="fl sui-breadcrumb">
+<div class="py-container">
+    <div id="item">
+        <div class="crumb-wrap">
+            <ul class="sui-breadcrumb">
                 <li>
-                    <a href="#">全部结果</a>
+                    <a href="#" th:text="${category1.name}"></a>
                 </li>
-                <li class="active"
-                    th:text="${paramMap != null && #maps.containsKey(paramMap,'keyword') ? param.keyword : ''}">
-                    智能手机
+                <li>
+                    <a href="#" th:text="${category2.name}"></a>
                 </li>
-            </ul>
-            <ul class="fl sui-tag">
-                <li class="with-x"
-                    th:if="${#maps.containsKey(paramMap,'brand')}">
-                    [[${paramMap.brand}]]<a
-                        th:href="@{${#strings.replace(url,'&brand=' + paramMap.brand,'')}}">x</a>
-                </li>
-                <li class="with-x"
-                    th:if="${#maps.containsKey(paramMap,'price')}">
-                    [[${paramMap.price}]]<a
-                        th:href="@{${#strings.replace(url,'&price=' + paramMap.price,'')}}">x</a>
-                </li>
-                <li class="with-x" th:each="sm:${paramMap}"
-                    th:if="${#strings.startsWith(sm.key,'spec_')}"
-                >
-                    [[${#strings.replace(sm.key,'spec_','')}]]:[[${#strings.replace(sm.value,'%2B','+')}]]<a
-                        @{${#strings.replace(url, th:href="@{${#strings.replace(url,'&' + sm.key
-                    + '=' + sm.value,'')}}">x</a>
+                <li>
+                    <a href="#" th:text="${category3.name}"></a>
                 </li>
             </ul>
-            <form class="fl sui-form form-dark">
-                <div class="input-control control-right">
-                    <input type="text"/>
-                    <i class="sui-icon icon-touch-magnifier"></i>
-                </div>
-            </form>
         </div>
-        <!--selector-->
-        <div class="clearfix selector">
-            <div class="type-wrap logo"
-                 th:if="${!#maps.containsKey(paramMap,'brand')}">
-                <div class="fl key brand">品牌</div>
-                <div class="value logos">
-                    <ul class="logo-list">
-                        <li th:each="brand:${result.brandList}"><a
-                                th:href="@{${url}(brand=${brand})}"
-                                th:text="${brand}"></a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="ext">
-                    <a class="sui-btn" href="javascript:void(0);">多选</a>
-                    <a href="javascript:void(0);">更多</a>
-                </div>
-            </div>
-            <div class="type-wrap" th:each="spec:${result.specList}"
-                 th:unless="${#maps.containsKey(paramMap,'spec_' + spec.key)}">
-                <div class="fl key" th:text="${spec.key}" }>网络制式</div>
-                <div class="fl value">
-                    <ul class="type-list">
-                        <li th:each="op:${spec.value}">
-                            <a th:href="@{${url}('spec_' + ${spec.key}=${op})}"
-                               th:text="${op}">GSM（移动/联通2G）</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="fl ext"></div>
-            </div>
-            <div class="type-wrap">
-                <div class="fl key">价格</div>
-                <div class="fl value">
-                    <ul class="type-list">
-                        <li>
-                            <a th:href="@{${url}(price='0-500')}"
-                               th:text="0-500元">0-500元</a>
-                        </li>
-                        <li>
-                            <a th:href="@{${url}(price='500-1000')}"
-                               th:text="500-1000元">500-1000元</a>
-                        </li>
-                        <li>
-                            <a th:href="@{${url}(price='1000-1500')}"
-                               th:text="1000-1500元">1000-1500元</a>
-                        </li>
-                        <li>
-                            <a th:href="@{${url}(price='1500-2000')}"
-                               th:text="1500-2000元">1500-2000元</a>
-                        </li>
-                        <li>
-                            <a th:href="@{${url}(price='2000-3000')}"
-                               th:text="2000-3000元">2000-3000元 </a>
-                        </li>
-                        <li>
-                            <a th:href="@{${url}(price='3000')}"
-                               th:text="3000元以上">3000元以上</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="fl ext">
-                </div>
-            </div>
-            <div class="type-wrap">
-                <div class="fl key">更多筛选项</div>
-                <div class="fl value">
-                    <ul class="type-list">
-                        <li>
-                            <a>特点</a>
-                        </li>
-                        <li>
-                            <a>系统</a>
-                        </li>
-                        <li>
-                            <a>手机内存 </a>
-                        </li>
-                        <li>
-                            <a>单卡双卡</a>
-                        </li>
-                        <li>
-                            <a>其他</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="fl ext">
-                </div>
-            </div>
-        </div>
-        <!--details-->
-        <div class="details">
-            <div class="sui-navbar">
-                <div class="navbar-inner filter">
-                    <ul class="sui-nav">
-                        <li class="active">
-                            <a href="#">综合</a>
-                        </li>
-                        <li>
-                            <a href="#">销量</a>
-                        </li>
-                        <li>
-                            <a href="#">新品</a>
-                        </li>
-                        <li>
-                            <a href="#">评价</a>
-                        </li>
-                        <li>
-                            <a th:href="@{${url}(sortRule='ASC',sortField='price')}">价格↑</a>
-                        </li>
-                        <li>
-                            <a th:href="@{${url}(sortRule='DESC',sortField='price')}">价格↓</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <!--商品列表-->
-            <div class="goods-list">
-                <ul class="yui3-g">
-                    <li class="yui3-u-1-5" th:each="sku:${result.rows}">
-                        <div class="list-wrap">
-                            <div class="p-img">
-                                <a href="http://10.211.55.6:8099/10000000616300.html"
-                                   target="_blank"><img
-                                        th:src="${sku.image}"/></a>
-                            </div>
-                            <div class="price">
-                                <strong>
-                                    <em>¥</em>
-                                    <i th:text="${sku.price}">6088.00</i>
-                                </strong>
-                            </div>
-                            <div class="attr">
-                                <a href="http://10.211.55.6:8099/10000000616300.html"
-                                   target="_blank"
-                                   th:title="${sku.spec}"
-                                   th:utext="${sku.name}">Apple苹果iPhone
-                                    6s (A1699)Apple苹果iPhone 6s
-                                    (A1699)Apple苹果iPhone 6s (A1699)Apple苹果iPhone
-                                    6s (A1699)</a>
-                            </div>
-                            <div class="commit">
-                                <i class="command">已有<span>2000</span>人评价</i>
-                            </div>
-                            <div class="operate">
-                                <a class="sui-btn btn-bordered btn-danger"
-                                   href="success-cart.html"
-                                   target="_blank">加入购物车</a>
-                                <a class="sui-btn btn-bordered"
-                                   href="javascript:void(0);">收藏</a>
-                            </div>
+        <!--product-info-->
+        <div class="product-info">
+            <div class="fl preview-wrap">
+                <!--放大镜效果-->
+                <div class="zoom">
+                    <!--默认第一个预览-->
+                    <div class="spec-preview" id="preview">
+                        <span class="jqzoom"><img th:jqimg="${imageList[0]}"
+                                                  th:src="${imageList[0]}"/></span>
+                    </div>
+                    <!--下方的缩略图-->
+                    <div class="spec-scroll">
+                        <a class="prev">&lt;</a>
+                        <!--左右按钮-->
+                        <div class="items">
+                            <ul>
+                                <li th:each="img:${imageList}"><img
+                                        onmousemove="preview(this)"
+                                        th:bimg="${img}"
+                                        th:src="${img}"/></li>
+                            </ul>
                         </div>
-                    </li>
+                        <a class="next">&gt;</a>
+                    </div>
+                </div>
+            </div>
 
-                </ul>
-            </div>
-            <div class="fr page">
-                <div class="sui-pagination pagination-large">
-                    <ul>
-                        <li class="prev disabled">
-                            <a href="#">«上一页</a>
-                        </li>
-                        <li class="active">
-                            <a href="#">1</a>
-                        </li>
-                        <li>
-                            <a href="#">2</a>
-                        </li>
-                        <li>
-                            <a href="#">3</a>
-                        </li>
-                        <li>
-                            <a href="#">4</a>
-                        </li>
-                        <li>
-                            <a href="#">5</a>
-                        </li>
-                        <li class="dotted"><span>...</span></li>
-                        <li class="next">
-                            <a href="#">下一页»</a>
-                        </li>
-                    </ul>
-                    <div><span>共10页&nbsp;</span><span>
-      到第
-      <input class="page-num" type="text">
-      页 <button class="page-confirm" onclick="alert(1)">确定</button></span></div>
+            <div class="fr itemInfo-wrap" id="itemArray">
+                <div class="sku-name">
+                    <h4>{{sku.name}}</h4>
+                </div>
+                <div class="news"><span th:text="${spu.caption}"></span></div>
+                <div class="summary">
+                    <div class="summary-wrap">
+                        <div class="fl title">
+                            <i>价　　格</i>
+                        </div>
+                        <div class="fl price">
+                            <i>¥</i>
+                            <em>{{sku.price}}</em>
+                            <span>降价通知</span>
+                        </div>
+                        <div class="fr remark">
+                            <i>累计评价</i><em>612188</em>
+                        </div>
+                    </div>
+                    <div class="summary-wrap">
+                        <div class="fl title">
+                            <i>促　　销</i>
+                        </div>
+                        <div class="fl fix-width">
+                            <i class="red-bg">加价购</i>
+                            <em class="t-gray">满999.00另加20.00元，或满1999.00另加30.00元，或满2999.00另加40.00元，即可在购物车换购热销商品</em>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="support">
+                    <div class="summary-wrap">
+                        <div class="fl title">
+                            <i>支　　持</i>
+                        </div>
+                        <div class="fl fix-width">
+                            <em class="t-gray">以旧换新，闲置手机回收 4G套餐超值抢 礼品购</em>
+                        </div>
+                    </div>
+                    <div class="summary-wrap">
+                        <div class="fl title">
+                            <i>配 送 至</i>
+                        </div>
+                        <div class="fl fix-width">
+                            <em class="t-gray">满999.00另加20.00元，或满1999.00另加30.00元，或满2999.00另加40.00元，即可在购物车换购热销商品</em>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clearfix choose">
+                    <div class="summary-wrap clearfix" id="specification">
+                        <!--循环MAP-->
+                        <dl th:each="spec,specStat:${specificationList}">
+                            <dt>
+                                <div class="fl title">
+                                    <i th:text="${spec.key}"></i>
+                                </div>
+                            </dt>
+                            <dd th:each="arrValue:${specStat.current.value}">
+                                <a href="javascript:;"
+                                   th:@click="|selectSpecification('${spec.key}','${arrValue}')|"
+                                   th:v-bind:class="|{selected:sel('${spec.key}','${arrValue}')}|">
+                                    <i th:text="${arrValue}"></i>
+                                    <span title="点击取消选择">&nbsp;</span>
+                                </a>
+                            </dd>
+                        </dl>
+                    </div>
+
+                    <div class="summary-wrap">
+                        <div class="fl title">
+                            <div class="control-group">
+                                <div class="controls">
+                                    <input autocomplete="off" class="itxt"
+                                           type="text" v-model="num"/>
+                                    <a @click="addNum()"
+                                       class="increment plus"
+                                       href="javascript:void(0)">+</a>
+                                    <a @click="subNum()"
+                                       class="increment mins"
+                                       href="javascript:void(0)">-</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fl">
+                            <ul class="btn-choose unstyled">
+                                <li>
+                                    <a @click="addCart()"
+                                       class="sui-btn  btn-danger addshopcar"
+                                       href="javascript:void(0)">加入购物车</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <!--hotsale-->
-        <div class="clearfix hot-sale">
-            <h4 class="title">热卖商品</h4>
-            <div class="hot-list">
+        <!--product-detail-->
+        <div class="clearfix product-detail">
+            <div class="fl aside">
+                <ul class="sui-nav nav-tabs tab-wraped">
+                    <li class="active">
+                        <a data-toggle="tab" href="#index">
+                            <span>相关分类</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-toggle="tab" href="#profile">
+                            <span>推荐品牌</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content tab-wraped">
+                    <div class="tab-pane active" id="index">
+                        <ul class="part-list unstyled">
+                            <li>手机</li>
+                            <li>手机壳</li>
+                            <li>内存卡</li>
+                            <li>Iphone配件</li>
+                            <li>贴膜</li>
+                            <li>手机耳机</li>
+                            <li>移动电源</li>
+                            <li>平板电脑</li>
+                        </ul>
+                        <ul class="goods-list unstyled">
+                            <li>
+                                <div class="list-wrap">
+                                    <div class="p-img">
+                                        <img src="/img/_/part01.png"/>
+                                    </div>
+                                    <div class="attr">
+                                        <em>Apple苹果iPhone 6s (A1699)</em>
+                                    </div>
+                                    <div class="price">
+                                        <strong>
+                                            <em>¥</em>
+                                            <i>6088.00</i>
+                                        </strong>
+                                    </div>
+                                    <div class="operate">
+                                        <a class="sui-btn btn-bordered"
+                                           href="javascript:void(0);">加入购物车</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="list-wrap">
+                                    <div class="p-img">
+                                        <img src="/img/_/part02.png"/>
+                                    </div>
+                                    <div class="attr">
+                                        <em>Apple苹果iPhone 6s (A1699)</em>
+                                    </div>
+                                    <div class="price">
+                                        <strong>
+                                            <em>¥</em>
+                                            <i>6088.00</i>
+                                        </strong>
+                                    </div>
+                                    <div class="operate">
+                                        <a class="sui-btn btn-bordered"
+                                           href="javascript:void(0);">加入购物车</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="list-wrap">
+                                    <div class="p-img">
+                                        <img src="/img/_/part03.png"/>
+                                    </div>
+                                    <div class="attr">
+                                        <em>Apple苹果iPhone 6s (A1699)</em>
+                                    </div>
+                                    <div class="price">
+                                        <strong>
+                                            <em>¥</em>
+                                            <i>6088.00</i>
+                                        </strong>
+                                    </div>
+                                    <div class="operate">
+                                        <a class="sui-btn btn-bordered"
+                                           href="javascript:void(0);">加入购物车</a>
+                                    </div>
+                                </div>
+                                <div class="list-wrap">
+                                    <div class="p-img">
+                                        <img src="/img/_/part02.png"/>
+                                    </div>
+                                    <div class="attr">
+                                        <em>Apple苹果iPhone 6s (A1699)</em>
+                                    </div>
+                                    <div class="price">
+                                        <strong>
+                                            <em>¥</em>
+                                            <i>6088.00</i>
+                                        </strong>
+                                    </div>
+                                    <div class="operate">
+                                        <a class="sui-btn btn-bordered"
+                                           href="javascript:void(0);">加入购物车</a>
+                                    </div>
+                                </div>
+                                <div class="list-wrap">
+                                    <div class="p-img">
+                                        <img src="/img/_/part03.png"/>
+                                    </div>
+                                    <div class="attr">
+                                        <em>Apple苹果iPhone 6s (A1699)</em>
+                                    </div>
+                                    <div class="price">
+                                        <strong>
+                                            <em>¥</em>
+                                            <i>6088.00</i>
+                                        </strong>
+                                    </div>
+                                    <div class="operate">
+                                        <a class="sui-btn btn-bordered"
+                                           href="javascript:void(0);">加入购物车</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane" id="profile">
+                        <p>推荐品牌</p>
+                    </div>
+                </div>
+            </div>
+            <div class="fr detail">
+                <div class="clearfix fitting">
+                    <h4 class="kt">选择搭配</h4>
+                    <div class="good-suits">
+                        <div class="fl master">
+                            <div class="list-wrap">
+                                <div class="p-img">
+                                    <img src="/img/_/l-m01.png"/>
+                                </div>
+                                <em>￥5299</em>
+                                <i>+</i>
+                            </div>
+                        </div>
+                        <div class="fl suits">
+                            <ul class="suit-list">
+                                <li class="">
+                                    <div id="">
+                                        <img src="/img/_/dp01.png"/>
+                                    </div>
+                                    <i>Feless费勒斯VR</i>
+                                    <label class="checkbox-pretty"
+                                           data-toggle="checkbox">
+                                        <input type="checkbox"><span>39</span>
+                                    </label>
+                                </li>
+                                <li class="">
+                                    <div id=""><img src="/img/_/dp02.png"/>
+                                    </div>
+                                    <i>Feless费勒斯VR</i>
+                                    <label class="checkbox-pretty"
+                                           data-toggle="checkbox">
+                                        <input type="checkbox"><span>50</span>
+                                    </label>
+                                </li>
+                                <li class="">
+                                    <div id=""><img src="/img/_/dp03.png"/>
+                                    </div>
+                                    <i>Feless费勒斯VR</i>
+                                    <label class="checkbox-pretty"
+                                           data-toggle="checkbox">
+                                        <input type="checkbox"><span>59</span>
+                                    </label>
+                                </li>
+                                <li class="">
+                                    <div id=""><img src="/img/_/dp04.png"/>
+                                    </div>
+                                    <i>Feless费勒斯VR</i>
+                                    <label class="checkbox-pretty"
+                                           data-toggle="checkbox">
+                                        <input type="checkbox"><span>99</span>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="fr result">
+                            <div class="num">已选购0件商品</div>
+                            <div class="price-tit"><strong>套餐价</strong></div>
+                            <div class="price">￥5299</div>
+                            <button class="sui-btn  btn-danger addshopcar">
+                                加入购物车
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-main intro">
+                    <ul class="sui-nav nav-tabs tab-wraped">
+                        <li class="active">
+                            <a data-toggle="tab" href="#one">
+                                <span>商品介绍</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#two">
+                                <span>规格与包装</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#three">
+                                <span>售后保障</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#four">
+                                <span>商品评价</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#five">
+                                <span>手机社区</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                    <div class="tab-content tab-wraped">
+                        <div class="tab-pane active" id="one"
+                             th:utext="${spu.introduction}">
+
+                        </div>
+                        <div class="tab-pane" id="two"
+                             th:utext="${spu.introduction}">
+
+                        </div>
+                        <div class="tab-pane" id="three"
+                             th:utext="${spu.saleService}">
+
+                        </div>
+                        <div class="tab-pane" id="four">
+                            <div class="comment">
+                                <div class="com-tit">商品评价</div>
+                                <div class="com-percent">
+                                    <p>好评度 <span class="percent">96%</span></p>
+                                </div>
+                                <div class="com-tab-type">
+                                    <ul class="type">
+                                        <li class="current"><a
+                                                href="javascript:;">全部评价(123456)</a>
+                                        </li>
+                                        <li><a href="javascript:;">晒图(500)</a>
+                                        </li>
+                                        <li><a href="javascript:;">追评(500)</a>
+                                        </li>
+                                        <li><a href="javascript:;">好评(500)</a>
+                                        </li>
+                                        <li><a href="javascript:;">中评(500)</a>
+                                        </li>
+                                        <li><a href="javascript:;">差评(500)</a>
+                                        </li>
+                                    </ul>
+                                    <div class="content">
+                                        <div class="com-item">
+                                            <div class="user-column">
+                                                <div class="username"><img
+                                                        src="/img/_/photo.jpg"/>用户****1
+                                                </div>
+                                                <div class="usernum">品享值258698
+                                                </div>
+                                            </div>
+                                            <div class="user-info">
+                                                <div class="stars star4"></div>
+                                                <p>手机还不错，可以的可以的</p>
+                                                <div class="guige">
+                                                    <ul class="mini">
+                                                        <li>玫瑰金</li>
+                                                        <li>标配版</li>
+                                                        <li>2017-11-02 13:23
+                                                        </li>
+                                                    </ul>
+                                                    <div class="operate">
+                                                        <span id="collect"><i
+                                                                class="sui-icon icon-tb-like"></i> 325</span>
+                                                        <span id="comment"><i
+                                                                class="sui-icon icon-tb-wang"></i> 256</span>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="com-item">
+                                            <div class="user-column">
+                                                <div class="username"><img
+                                                        src="/img/_/photo.jpg"/>用户****1
+                                                </div>
+                                                <div class="usernum">品享值258698
+                                                </div>
+                                            </div>
+                                            <div class="user-info">
+                                                <div class="stars star4"></div>
+                                                <p>手机还不错，可以的可以的</p>
+                                                <div class="guige">
+                                                    <ul class="mini">
+                                                        <li>玫瑰金</li>
+                                                        <li>标配版</li>
+                                                        <li>2017-11-02 13:23
+                                                        </li>
+                                                    </ul>
+                                                    <div class="operate">
+                                                        <span id="collect"><i
+                                                                class="sui-icon icon-tb-like"></i> 325</span>
+                                                        <span id="comment"><i
+                                                                class="sui-icon icon-tb-wang"></i> 256</span>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="com-item">
+                                            <div class="user-column">
+                                                <div class="username"><img
+                                                        src="/img/_/photo.jpg"/>用户****1
+                                                </div>
+                                                <div class="usernum">品享值258698
+                                                </div>
+                                            </div>
+                                            <div class="user-info">
+                                                <div class="stars star4"></div>
+                                                <p>手机还不错，可以的可以的</p>
+                                                <div class="guige">
+                                                    <ul class="mini">
+                                                        <li>玫瑰金</li>
+                                                        <li>标配版</li>
+                                                        <li>2017-11-02 13:23
+                                                        </li>
+                                                    </ul>
+                                                    <div class="operate">
+                                                        <span id="collect"><i
+                                                                class="sui-icon icon-tb-like"></i> 325</span>
+                                                        <span id="comment"><i
+                                                                class="sui-icon icon-tb-wang"></i> 256</span>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="com-item">
+                                            <div class="user-column">
+                                                <div class="username"><img
+                                                        src="/img/_/photo.jpg"/>用户****1
+                                                </div>
+                                                <div class="usernum">品享值258698
+                                                </div>
+                                            </div>
+                                            <div class="user-info">
+                                                <div class="stars star4"></div>
+                                                <p>手机还不错，可以的可以的</p>
+                                                <div class="guige">
+                                                    <ul class="mini">
+                                                        <li>玫瑰金</li>
+                                                        <li>标配版</li>
+                                                        <li>2017-11-02 13:23
+                                                        </li>
+                                                    </ul>
+                                                    <div class="operate">
+                                                        <span id="collect"><i
+                                                                class="sui-icon icon-tb-like"></i> 325</span>
+                                                        <span id="comment"><i
+                                                                class="sui-icon icon-tb-wang"></i> 256</span>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="com-item">
+                                            <div class="user-column">
+                                                <div class="username"><img
+                                                        src="/img/_/photo.jpg"/>用户****1
+                                                </div>
+                                                <div class="usernum">品享值258698
+                                                </div>
+                                            </div>
+                                            <div class="user-info">
+                                                <div class="stars star4"></div>
+                                                <p>手机还不错，可以的可以的</p>
+                                                <div class="guige">
+                                                    <ul class="mini">
+                                                        <li>玫瑰金</li>
+                                                        <li>标配版</li>
+                                                        <li>2017-11-02 13:23
+                                                        </li>
+                                                    </ul>
+                                                    <div class="operate">
+                                                        <span id="collect"><i
+                                                                class="sui-icon icon-tb-like"></i> 325</span>
+                                                        <span id="comment"><i
+                                                                class="sui-icon icon-tb-wang"></i> 256</span>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="five">
+                            <p>手机社区</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--like-->
+        <div class="clearfix"></div>
+        <div class="like">
+            <h4 class="kt">猜你喜欢</h4>
+            <div class="like-list">
                 <ul class="yui3-g">
-                    <li class="yui3-u-1-4">
+                    <li class="yui3-u-1-6">
                         <div class="list-wrap">
                             <div class="p-img">
-                                <img src="/img/like_01.png"/>
+                                <img src="/img/_/itemlike01.png"/>
                             </div>
                             <div class="attr">
-                                <em>Apple苹果iPhone 6s (A1699)</em>
+                                <em>DELL戴尔Ins 15MR-7528SS 15英寸 银色 笔记本</em>
+                            </div>
+                            <div class="price">
+                                <strong>
+                                    <em>¥</em>
+                                    <i>3699.00</i>
+                                </strong>
+                            </div>
+                            <div class="commit">
+                                <i class="command">已有6人评价</i>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="yui3-u-1-6">
+                        <div class="list-wrap">
+                            <div class="p-img">
+                                <img src="/img/_/itemlike02.png"/>
+                            </div>
+                            <div class="attr">
+                                <em>Apple苹果iPhone 6s/6s Plus 16G 64G 128G</em>
+                            </div>
+                            <div class="price">
+                                <strong>
+                                    <em>¥</em>
+                                    <i>4388.00</i>
+                                </strong>
+                            </div>
+                            <div class="commit">
+                                <i class="command">已有700人评价</i>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="yui3-u-1-6">
+                        <div class="list-wrap">
+                            <div class="p-img">
+                                <img src="/img/_/itemlike03.png"/>
+                            </div>
+                            <div class="attr">
+                                <em>DELL戴尔Ins 15MR-7528SS 15英寸 银色 笔记本</em>
                             </div>
                             <div class="price">
                                 <strong>
@@ -1057,13 +1420,13 @@
                             </div>
                         </div>
                     </li>
-                    <li class="yui3-u-1-4">
+                    <li class="yui3-u-1-6">
                         <div class="list-wrap">
                             <div class="p-img">
-                                <img src="/img/like_03.png"/>
+                                <img src="/img/_/itemlike04.png"/>
                             </div>
                             <div class="attr">
-                                <em>金属A面，360°翻转，APP下单省300！</em>
+                                <em>DELL戴尔Ins 15MR-7528SS 15英寸 银色 笔记本</em>
                             </div>
                             <div class="price">
                                 <strong>
@@ -1076,32 +1439,32 @@
                             </div>
                         </div>
                     </li>
-                    <li class="yui3-u-1-4">
+                    <li class="yui3-u-1-6">
                         <div class="list-wrap">
                             <div class="p-img">
-                                <img src="/img/like_04.png"/>
+                                <img src="/img/_/itemlike05.png"/>
                             </div>
                             <div class="attr">
-                                <em>256SSD商务大咖，完爆职场，APP下单立减200</em>
+                                <em>DELL戴尔Ins 15MR-7528SS 15英寸 银色 笔记本</em>
                             </div>
                             <div class="price">
                                 <strong>
                                     <em>¥</em>
-                                    <i>4068.00</i>
+                                    <i>4088.00</i>
                                 </strong>
                             </div>
                             <div class="commit">
-                                <i class="command">已有20人评价</i>
+                                <i class="command">已有700人评价</i>
                             </div>
                         </div>
                     </li>
-                    <li class="yui3-u-1-4">
+                    <li class="yui3-u-1-6">
                         <div class="list-wrap">
                             <div class="p-img">
-                                <img src="/img/like_02.png"/>
+                                <img src="/img/_/itemlike06.png"/>
                             </div>
                             <div class="attr">
-                                <em>Apple苹果iPhone 6s (A1699)</em>
+                                <em>DELL戴尔Ins 15MR-7528SS 15英寸 银色 笔记本</em>
                             </div>
                             <div class="price">
                                 <strong>
@@ -1253,9 +1616,6 @@
     </div>
 </div>
 <!--页面底部END-->
-
-<!-- 基础js库 -->
-
 <!--侧栏面板开始-->
 <div class="J-global-toolbar">
     <div class="toolbar-wrap J-wrap">
@@ -1402,11 +1762,98 @@
 
         <div id="J-toolbar-load-hook"></div>
 
+
     </div>
 </div>
+<script th:inline="javascript">
+    var item = new Vue({
+        el: '#itemArray',
+        data: {
+            skuList: [[${skuList}]],   //SKU集合
+            sku: {},                     //当前选中的sku
+            spec: {},                   //选中的sku的规格
+            num: 1
+        },
+        methods: {
+            //是否绑定selected样式
+            sel: function (name, value) {
+                if (this.spec == undefined) {
+                    return false;
+                }
+
+                if (this.spec[name] == value) {
+                    return true;
+                } else {
+                    return false;
+                }
+            },
+
+            //选择切换
+            selectSpecification: function (specName, specValue) {
+                //选中的spec信息
+                this.$set(this.spec, specName, specValue);
+                //循环匹配
+                for (var i = 0; i < this.skuList.length; i++) {
+                    //匹配规格是否相同，如果相同，则表明选中的是该SKU
+                    if (this.matchObject(JSON.parse(this.skuList[i].spec), this.spec)) {
+                        //深克隆
+                        this.sku = JSON.parse(JSON.stringify(this.skuList[i]));
+                        return;
+                    }
+                }
+
+                //如果上面执行完毕，没有找到SKU，则提示下架操作
+                this.sku.id = 0;
+                this.sku.name = '提示:该商品已经下架';
+                this.sku.price = 0;
+            },
+
+            //判断2个JSON是否是相同的JSON数据
+            matchObject: function (map1, map2) {
+                //循环一个map
+                for (var key in map1) {
+                    //获取当前循环的map的key,再获取当前key的值
+                    let m1v = map1[key];
+                    //获取另一个map相同key的值
+                    let m2v = map2[key];
+                    //不同，则返回false，表明不相同
+                    if (m1v != m2v) {
+                        return false;
+                    }
+                }
+                return true;
+            },
+
+            //加入购物车
+            addCart: function () {
+                location.href = "http://web.changgou.com:9102/wo/wcart/add/" + this.sku.id + "/" + this.num;
+            },
+            // +
+            addNum: function () {
+                this.num++;
+            },
+            //-
+            subNum: function () {
+
+                if (this.num == 1) {
+                    //this.num = 1;
+                    alert("还买不买");
+                } else {
+                    this.num--;
+                }
+
+            }
+        },
+        created: function () {
+            //默认选中第1个SKU,深克隆
+            this.sku = JSON.parse(JSON.stringify(this.skuList[0]));
+            //第1个SKU的规格,深克隆
+            this.spec = JSON.parse(this.skuList[0].spec);
+        }
+    })
+</script>
 
 
-<script src="./js/all.js" type="text/javascript"></script>
 </body>
 
 </html>

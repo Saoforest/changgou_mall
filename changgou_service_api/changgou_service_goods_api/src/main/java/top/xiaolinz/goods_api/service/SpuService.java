@@ -1,13 +1,13 @@
 package top.xiaolinz.goods_api.service;
 
+import java.util.List;
+
+import com.baomidou.mybatisplus.extension.service.IService;
+
 import top.xiaolinz.common_db.utils.PageResult;
 import top.xiaolinz.goods_api.entity.Spu;
-import top.xiaolinz.goods_api.entity.Spu;
-import com.baomidou.mybatisplus.extension.service.IService;
 import top.xiaolinz.goods_api.vo.Goods;
 import top.xiaolinz.goods_api.vo.PageSpuRequestVo;
-
-import java.util.List;
 
 /**
  * @author XiaoLin
@@ -29,7 +29,7 @@ public interface SpuService extends IService<Spu> {
 	 * @param id spuId
 	 * @return spu对象
 	 */
-	Spu findSpuById(Integer id);
+    Spu findSpuById(String id);
 
 
 	/**

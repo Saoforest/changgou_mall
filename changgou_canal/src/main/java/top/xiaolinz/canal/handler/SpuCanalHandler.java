@@ -25,7 +25,9 @@ public class SpuCanalHandler implements EntryHandler<Spu> {
 
 	@Override
 	public void update(Spu before, Spu after) {
+
 		log.info("检测到spu数据更新:旧数据{},新数据{}",before,after);
+
 		if ("0".equals(before.getIsMarketable()) && "1".equals(after.getIsMarketable())) {
 			log.info("条件判断成功,开始发送消息:{}",after.getId());
             this.rabbitTemplate.convertAndSend(RabbitmqConstant.GOODS_UP_EXCHANGE, "", after.getId());
@@ -41,5 +43,6 @@ public class SpuCanalHandler implements EntryHandler<Spu> {
             // 发消息
 	        this.rabbitTemplate.convertAndSend(RabbitmqConstant.GOODS_UP_EXCHANGE, "", after.getId());
         }
+
 	}
 }

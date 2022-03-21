@@ -44,8 +44,8 @@ public class SearchController {
 
         // 分页
         final Page<SkuInfo> page = new Page<>();
-        page.initPage(Long.parseLong((String)search.get("total")), (Integer.parseInt((String)search.get("pageNum"))),
-            Integer.parseInt((String)search.get("totalPages")));
+        page.initPage((Long)search.get("total"), Integer.parseInt(map.get("page")),
+            Math.toIntExact((Long)search.get("totalPages")));
 
         // 拼接url,保证线程安全
         final StringBuffer url = new StringBuffer("/search/list");

@@ -1,21 +1,25 @@
 package top.xiaolinz.goods.service;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.lang.TypeReference;
-import cn.hutool.json.JSONUtil;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.*;
-import java.util.stream.Collectors;
-
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.transaction.annotation.Transactional;
+
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.lang.TypeReference;
+import cn.hutool.json.JSONUtil;
 import top.xiaolinz.common.constant.ExceptionEnum;
 import top.xiaolinz.common.utils.IdWorker;
 import top.xiaolinz.common_db.constant.PageConstant;
@@ -24,7 +28,6 @@ import top.xiaolinz.common_db.utils.Query;
 import top.xiaolinz.goods.exception.Assert;
 import top.xiaolinz.goods.mapper.SpuMapper;
 import top.xiaolinz.goods_api.entity.*;
-import top.xiaolinz.goods_api.entity.Spu;
 import top.xiaolinz.goods_api.service.*;
 import top.xiaolinz.goods_api.vo.Goods;
 import top.xiaolinz.goods_api.vo.PageSpuRequestVo;
@@ -59,7 +62,7 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, Spu> implements SpuSe
 	}
 
 	@Override
-	public Spu findSpuById(Integer id) {
+    public Spu findSpuById(String id) {
 
 		final Spu spu = this.getById(id);
 		return spu;
@@ -142,7 +145,7 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, Spu> implements SpuSe
 
 
 		final Spu spu = goods.getSpu();
-		spu.setId(String.valueOf(idWorker.nextId()));
+		spu.setId(String.valueOf(this.idWorker.nextId()));
 		this.save(spu);
 		final long count = this.categoryBrandService.count(new QueryWrapper<CategoryBrand>().eq("category_id", spu.getCategory3Id()).eq("brand_id", spu.getBrandId()));
 		if (count > 0) {
@@ -152,13 +155,13 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, Spu> implements SpuSe
 
 			this.categoryBrandService.save(brand);
 		}
-		final Category category = categoryService.getById(spu.getCategory3Id());
+		final Category category = this.categoryService.getById(spu.getCategory3Id());
 
 		final Brand brand = this.brandService.getById(spu.getBrandId());
 
 		final List<Sku> skuList = goods.getSkuList().stream().map(sku -> {
 			sku.setSpuId(spu.getId());
-			sku.setId(String.valueOf(idWorker.nextId()));
+			sku.setId(String.valueOf(this.idWorker.nextId()));
 			if (StringUtils.isEmpty(sku.getSpec())) {
 				sku.setSpec("{}");
             }

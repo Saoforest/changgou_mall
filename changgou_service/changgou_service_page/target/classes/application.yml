@@ -15,7 +15,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://10.211.55.6:6868/eureka
+      defaultZone: http://127.0.0.1:6868/eureka
   instance:
     prefer-ip-address: true
 feign:
@@ -37,4 +37,6 @@ hystrix:
         isolation:
           strategy: SEMAPHORE
 # 生成静态页的位置
-pagepath: /items
+pagepath: /Users/huangmuhong/template
+workerId: 0
+datacenterId: 0
