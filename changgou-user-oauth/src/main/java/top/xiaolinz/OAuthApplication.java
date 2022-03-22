@@ -1,18 +1,17 @@
-package top.xiaolinz.oauth;
+package top.xiaolinz;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-/**
- * @author XiaoLin
- * @date 2022/3/21 15:56
- * @blog https://www.xiaolinz.top/
- **/
 @SpringBootApplication
 @EnableDiscoveryClient
-public class OauthApplication {
+@MapperScan(basePackages = "top.xiaolinz.auth.dao")
+public class OAuthApplication {
+
     public static void main(String[] args) {
-        SpringApplication.run(OauthApplication.class, args);
+        SpringApplication.run(OAuthApplication.class, args);
     }
+
 }
