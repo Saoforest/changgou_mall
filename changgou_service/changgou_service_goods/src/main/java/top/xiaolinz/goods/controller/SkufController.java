@@ -51,7 +51,8 @@ public class SkufController {
 	 */
 	@ApiOperation(value = "根据id查询Sku")
 	@ApiImplicitParams({
-			@ApiImplicitParam(value = "Skuid",paramType = "path",name = "SkuId",required = true,defaultValue = "1115",dataTypeClass = Integer.class)
+        @ApiImplicitParam(value = "skuid", paramType = "path", name = "SkuId", required = true, defaultValue = "1115",
+            dataTypeClass = Integer.class)
 	})
 	@GetMapping("/{skuId}")
 	public R findById(@PathVariable("skuId") Integer skuId){

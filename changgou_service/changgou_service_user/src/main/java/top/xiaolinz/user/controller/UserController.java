@@ -3,6 +3,7 @@ package top.xiaolinz.user.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +40,7 @@ public class UserController {
 	@ApiResponses(value = {
 			@ApiResponse(code = 200,message = "成功",response = R.class,responseContainer = "Map")
 	})
+    @PreAuthorize("hasAnyRole('admin')")
 	public R findAll(){
 		final List<User> list = this.userService.findAll();
 

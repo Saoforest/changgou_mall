@@ -24,7 +24,8 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/oauth/login", "/oauth/logout");
+        web.ignoring().antMatchers("/oauth/login", "/oauth/logout", "/login.html", "/css/**", "/data/**", "/fonts/**",
+            "/img/**", "/js/**");
     }
 
     /***
@@ -60,6 +61,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable().httpBasic() // 启用Http基本身份验证
             .and().formLogin() // 启用表单身份验证
             .and().authorizeRequests() // 限制基于Request请求访问
-            .anyRequest().authenticated(); // 其他请求都需要经过验证
+            .anyRequest().authenticated() // 其他请求都需要经过验证
+            .and().formLogin().loginPage("/oauth/login.html").loginProcessingUrl("/oauth/login").permitAll(); // 配置表单登录的页面设置;
     }
 }

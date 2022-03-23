@@ -17,4 +17,7 @@ public interface SkuFeign {
     @GetMapping("/sku/list/{spuId}")
     public R findSkuListBySpuId(@PathVariable("spuId") String spuId);
 
+    @GetMapping("/sku/{skuId}")
+    public R findById(@PathVariable("skuId") Integer skuId);
+
 }

@@ -67,7 +67,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         final String pwd = user.getPassword();
         log.info("收到的密码:{}", pwd);
         // 创建User对象
-        String permissions = "goods_list,seckill_list";
+        String permissions = "user,admin";
         UserJwt userDetails =
             new UserJwt(username, pwd, AuthorityUtils.commaSeparatedStringToAuthorityList(permissions));
         return userDetails;

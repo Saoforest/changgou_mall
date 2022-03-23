@@ -18,6 +18,11 @@ spring:
         max-active: 50
         min-idle: 10
         max-wait: 150000
+  rabbitmq:
+    host: 10.211.55.6
+    username: admin
+    password: admin
+    virtual-host: myvhost
 eureka:
   client:
     service-url:

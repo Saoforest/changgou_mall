@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import top.xiaolinz.common.exception.BusinessException;
@@ -40,7 +41,7 @@ public class AuthController {
     private int cookieMaxAge;
 
     @PostMapping("/login")
-    public R login(String username, String password, HttpServletResponse response) {
+    public R login(@RequestParam String username, @RequestParam String password, HttpServletResponse response) {
         if (StringUtils.isBlank(username)) {
             throw new BusinessException("请输入用户名");
         }
