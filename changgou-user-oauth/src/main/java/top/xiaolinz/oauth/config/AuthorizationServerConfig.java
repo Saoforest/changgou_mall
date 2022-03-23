@@ -28,23 +28,30 @@ import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFacto
 @Configuration
 @EnableAuthorizationServer
 class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+
     // SpringSecurity 用户自定义授权认证类
     @Autowired
     UserDetailsService userDetailsService;
+
     // 授权认证管理器
     @Autowired
     AuthenticationManager authenticationManager;
+
     // 令牌持久化存储接口
     @Autowired
     TokenStore tokenStore;
+
     // 数据源，用于从数据库获取数据进行认证操作，测试可以从内存中获取
     @Autowired
     private DataSource dataSource;
+
     // jwt令牌转换器
     @Autowired
     private JwtAccessTokenConverter jwtAccessTokenConverter;
+
     @Autowired
     private CustomUserAuthenticationConverter customUserAuthenticationConverter;
+
     @Resource(name = "keyProp")
     private KeyProperties keyProperties;
 

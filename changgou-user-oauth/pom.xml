@@ -15,17 +15,19 @@
 
     <dependencies>
 
-        <dependency>
-            <groupId>top.xiaolinz</groupId>
-            <artifactId>changgou_common</artifactId>
-            <version>0.1</version>
-        </dependency>
 
         <!--查询数据库数据-->
         <dependency>
             <groupId>top.xiaolinz</groupId>
             <artifactId>changgou_common_db</artifactId>
             <version>0.1</version>
+
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-amqp</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -46,6 +48,19 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>top.xiaolinz</groupId>
+            <artifactId>changgou_service_user_api</artifactId>
+            <version>0.1</version>
+
+            <exclusions>
+                <exclusion>
+                    <groupId>com.baomidou</groupId>
+                    <artifactId>mybatis-plus-boot-starter</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

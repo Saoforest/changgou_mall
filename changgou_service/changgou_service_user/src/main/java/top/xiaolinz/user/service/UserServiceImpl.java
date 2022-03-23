@@ -1,20 +1,21 @@
 package top.xiaolinz.user.service;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
+
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
 import top.xiaolinz.common_db.constant.PageConstant;
 import top.xiaolinz.common_db.utils.PageResult;
 import top.xiaolinz.common_db.utils.Query;
 import top.xiaolinz.user.mapper.UserMapper;
-import top.xiaolinz.user_api.entity.User;
 import top.xiaolinz.user_api.entity.User;
 import top.xiaolinz.user_api.service.UserService;
 import top.xiaolinz.user_api.vo.PageUserRequestVo;
@@ -97,6 +98,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 		return new PageResult<User>(page);
 	}
 
+    @Override
+    public User findByName(String name) {
+        final User user = this.getById(name);
+        return user;
+    }
 
 
 	/**

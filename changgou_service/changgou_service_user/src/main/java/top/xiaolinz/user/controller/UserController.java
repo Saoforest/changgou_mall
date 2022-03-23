@@ -1,10 +1,14 @@
 package top.xiaolinz.user.controller;
 
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import io.swagger.annotations.*;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+
+import io.swagger.annotations.*;
 import top.xiaolinz.common.group.UpdateGroup;
 import top.xiaolinz.common.utils.R;
 import top.xiaolinz.common.utils.StatusCode;
@@ -12,8 +16,6 @@ import top.xiaolinz.common_db.utils.PageResult;
 import top.xiaolinz.user_api.entity.User;
 import top.xiaolinz.user_api.service.UserService;
 import top.xiaolinz.user_api.vo.PageUserRequestVo;
-
-import java.util.List;
 
 
 /**
@@ -58,6 +60,19 @@ public class UserController {
 
 		return R.ok(StatusCode.OK,"查询成功").put("data", user);
 	}
+
+    /**
+     * 该功能忽略认证
+     * 
+     * @param name
+     * @return
+     */
+    @GetMapping("/load/{name}")
+    public R findByName(@PathVariable("name") String name) {
+        final User user = this.userService.findByName(name);
+
+        return R.ok().put("data", user);
+    }
 
 	@PostMapping("/save")
 	@ApiOperation(value = "添加user")

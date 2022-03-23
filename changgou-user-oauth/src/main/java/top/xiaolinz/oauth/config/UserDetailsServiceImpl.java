@@ -8,22 +8,28 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import lombok.extern.slf4j.Slf4j;
+import top.xiaolinz.common.utils.R;
 import top.xiaolinz.oauth.util.UserJwt;
+import top.xiaolinz.user_api.feign.UserFeign;
 
 /*****
  * 自定义授权认证类
  */
 @Service
+@Slf4j
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     ClientDetailsService clientDetailsService;
+
+    @Autowired
+    private UserFeign userFeign;
 
     /****
      * 自定义授权认证
@@ -55,7 +61,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
 
         // 根据用户名查询用户信息
-        String pwd = new BCryptPasswordEncoder().encode("it");
+        // String pwd = new BCryptPasswordEncoder().encode("it");
+        final R r = this.userFeign.findByName(username);
+        final top.xiaolinz.user_api.entity.User user = r.getData("data", top.xiaolinz.user_api.entity.User.class);
+        final String pwd = user.getPassword();
+        log.info("收到的密码:{}", pwd);
         // 创建User对象
         String permissions = "goods_list,seckill_list";
         UserJwt userDetails =

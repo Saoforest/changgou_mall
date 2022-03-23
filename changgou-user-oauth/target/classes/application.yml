@@ -7,7 +7,7 @@ spring:
     host: 10.211.55.6
     port: 6380
     password:
-    jedis:
+    lettuce:
       pool:
         max-active: 8
         max-idle: 8
@@ -37,3 +37,5 @@ encrypt:
     secret: changgou
     alias: changgou
     password: changgou
+workerId: 0
+datacenterId: 0

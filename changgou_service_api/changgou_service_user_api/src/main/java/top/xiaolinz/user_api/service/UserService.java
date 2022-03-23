@@ -1,12 +1,12 @@
 package top.xiaolinz.user_api.service;
 
+import java.util.List;
+
+import com.baomidou.mybatisplus.extension.service.IService;
+
 import top.xiaolinz.common_db.utils.PageResult;
 import top.xiaolinz.user_api.entity.User;
-import top.xiaolinz.user_api.entity.User;
-import com.baomidou.mybatisplus.extension.service.IService;
 import top.xiaolinz.user_api.vo.PageUserRequestVo;
-
-import java.util.List;
 
 /**
 * 
@@ -74,4 +74,11 @@ public interface UserService extends IService<User>{
      * @return 结果集
      */
     PageResult<User> findByPageAndCondition(PageUserRequestVo vo);
+
+    /**
+     * 根据名字查询
+     * 
+     * @param name
+     */
+    User findByName(String name);
 }
