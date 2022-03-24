@@ -52,10 +52,10 @@ public class SkufController {
 	@ApiOperation(value = "根据id查询Sku")
 	@ApiImplicitParams({
         @ApiImplicitParam(value = "skuid", paramType = "path", name = "SkuId", required = true, defaultValue = "1115",
-            dataTypeClass = Integer.class)
+            dataTypeClass = String.class)
 	})
 	@GetMapping("/{skuId}")
-	public R findById(@PathVariable("skuId") Integer skuId){
+    public R findById(@PathVariable("skuId") String skuId) {
 		final Sku sku = this.skuService.findSkuById(skuId);
 
 		return R.ok(StatusCode.OK,"查询成功").put("data", sku);

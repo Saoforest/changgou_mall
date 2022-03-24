@@ -35,7 +35,7 @@ public class SkuServiceImpl extends ServiceImpl<SkuMapper, Sku> implements SkuSe
 	}
 
 	@Override
-	public Sku findSkuById(Integer id) {
+    public Sku findSkuById(String id) {
 
 		final Sku Sku = this.getById(id);
 		return Sku;

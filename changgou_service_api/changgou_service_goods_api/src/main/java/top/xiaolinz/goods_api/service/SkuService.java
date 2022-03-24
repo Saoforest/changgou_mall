@@ -28,7 +28,7 @@ public interface SkuService extends IService<Sku> {
 	 * @param id skuId
 	 * @return sku对象
 	 */
-	Sku findSkuById(Integer id);
+    Sku findSkuById(String id);
 
 
 	/**

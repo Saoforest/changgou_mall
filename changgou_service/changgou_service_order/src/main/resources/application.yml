@@ -1,6 +1,11 @@
 server:
   port: 9002
 spring:
+  rabbitmq:
+    host: 10.211.55.6
+    username: admin
+    password: admin
+    virtual-host: myvhost
   application:
     name: order
   datasource:
@@ -10,6 +15,14 @@ spring:
     password: 990206
   main:
     allow-bean-definition-overriding: true #当遇到同样名字的时候，是否允许覆盖注册
+  redis:
+    host: 10.211.55.6
+    port: 6380
+    lettuce:
+      pool:
+        max-active: 50
+        min-idle: 10
+        max-wait: 150000
 eureka:
   client:
     service-url:
@@ -51,3 +64,5 @@ knife4j:
     enableFooter: false
     enableFooterCustom: true
     footerCustomContent: Apache License 2.0 | Copyright  2022-[XiaoLin](https://www.xiaolinz.top)
+workerId: 0
+datacenterId: 0

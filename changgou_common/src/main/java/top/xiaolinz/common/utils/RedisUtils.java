@@ -229,6 +229,17 @@ public class RedisUtils {
         return this.redisTemplate.opsForHash().get(key, item);
     }
 
+    /**
+     * HashGet
+     *
+     * @param key
+     *            键 不能为null
+     * @return 值
+     */
+    public List<Object> hget(String key) {
+        return this.redisTemplate.boundHashOps(key).values();
+    }
+
     // ================================Map=================================
 
     /**
