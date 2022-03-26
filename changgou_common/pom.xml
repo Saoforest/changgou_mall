@@ -13,7 +13,7 @@
 
     <properties>
         <lombok.version>1.18.22</lombok.version>
-        <hutool.version>5.7.21</hutool.version>
+        <hutool.version>5.7.22</hutool.version>
         <swagger.version>3.0.0</swagger.version>
         <validation.version>2.6.4</validation.version>
         <swagger-bootstrap-ui.version>1.9.6</swagger-bootstrap-ui.version>

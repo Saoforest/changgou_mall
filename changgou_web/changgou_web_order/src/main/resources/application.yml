@@ -7,6 +7,15 @@ spring:
     allow-bean-definition-overriding: true   #当遇到同样名字的时候，是否允许覆盖注册
   thymeleaf:
     cache: false
+  redis:
+    host: 10.211.55.6
+    port: 6380
+    lettuce:
+      pool:
+        max-idle: 50
+        max-active: 50
+        max-wait: 150000
+        min-idle: 10
 eureka:
   client:
     service-url:
@@ -39,3 +48,5 @@ ribbon:
   ReadTimeout: 4000
   #请求连接的超时时间
   ConnectTimeout: 3000
+workerId: 0
+datacenterId: 0

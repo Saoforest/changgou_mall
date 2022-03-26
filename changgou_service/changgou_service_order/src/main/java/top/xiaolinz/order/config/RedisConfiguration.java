@@ -23,7 +23,7 @@ public class RedisConfiguration {
      *
      * @param factory
      *            Redis连接工厂
-     * @return
+     * @return 
      */
     @Primary
     @Bean(name = "redisTemplate")

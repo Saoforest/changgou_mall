@@ -1,19 +1,24 @@
 package top.xiaolinz.user.service;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
 import top.xiaolinz.common_db.constant.PageConstant;
 import top.xiaolinz.common_db.utils.PageResult;
 import top.xiaolinz.common_db.utils.Query;
 import top.xiaolinz.user.mapper.AddressMapper;
+import top.xiaolinz.user.utils.TokenDecode;
 import top.xiaolinz.user_api.entity.Address;
 import top.xiaolinz.user_api.service.AddressService;
 import top.xiaolinz.user_api.vo.PageAddressRequestVo;
@@ -27,6 +32,10 @@ import top.xiaolinz.user_api.vo.PageAddressRequestVo;
 **/
 @Service
 public class AddressServiceImpl extends ServiceImpl<AddressMapper, Address> implements AddressService{
+
+	@Autowired
+	private TokenDecode tokenDecode;
+
 	@Override
 	public List<Address> findAll() {
 
@@ -96,7 +105,13 @@ public class AddressServiceImpl extends ServiceImpl<AddressMapper, Address> impl
 		return new PageResult<Address>(page);
 	}
 
+	@Override public List<Address> findAddressListByUsername() {
+		final Map<String, String> userInfo = this.tokenDecode.getUserInfo();
+		final String username = userInfo.get("username");
+		final List<Address> list = this.list(new QueryWrapper<Address>().eq("username", this.list(new QueryWrapper<Address>().eq("username",username))));
 
+		return list;
+	}
 
 	/**
 	 * 多条件检索构造

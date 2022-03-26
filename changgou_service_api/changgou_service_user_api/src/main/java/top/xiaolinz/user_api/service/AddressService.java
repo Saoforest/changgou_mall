@@ -1,11 +1,12 @@
 package top.xiaolinz.user_api.service;
 
+import java.util.List;
+
+import com.baomidou.mybatisplus.extension.service.IService;
+
 import top.xiaolinz.common_db.utils.PageResult;
 import top.xiaolinz.user_api.entity.Address;
-import com.baomidou.mybatisplus.extension.service.IService;
 import top.xiaolinz.user_api.vo.PageAddressRequestVo;
-
-import java.util.List;
 
 /**
 * 
@@ -73,4 +74,10 @@ public interface AddressService extends IService<Address>{
      * @return 结果集
      */
     PageResult<Address> findByPageAndCondition(PageAddressRequestVo vo);
+
+    /**
+     * 根据登录人获取收件信息
+     * @return 收件信息集合
+     */
+    List<Address> findAddressListByUsername();
 }

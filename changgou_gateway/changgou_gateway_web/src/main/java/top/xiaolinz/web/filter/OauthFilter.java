@@ -31,9 +31,9 @@ import top.xiaolinz.web.service.AuthService;
 @Component
 public class OauthFilter implements GlobalFilter, Ordered {
 
+    public static final String LOGIN_URL="http://localhost:8001/api/oauth/login.html";
     @Autowired
     private AuthService authService;
-
     @Autowired
     private RedisUtils redisUtils;
 
@@ -51,19 +51,29 @@ public class OauthFilter implements GlobalFilter, Ordered {
         final String jti = this.authService.getJtiFromCookie(request);
         if (StringUtils.isBlank(jti)) {
             // 没有认证 拒绝访问
-            final R r = R.error("未被授权,拒绝访问!");
-            return this.result(exchange, r, HttpStatus.UNAUTHORIZED);
+//            final R r = R.error("未被授权,拒绝访问!");
+//            return this.result(exchange, r, HttpStatus.UNAUTHORIZED);
+
+            return this.toLoginPage(exchange,LOGIN_URL + "?from" + "=" + path);
         }
         // 从redis中取jti的值,如果取不到,拒绝访问
         final String jwt = (String)this.redisUtils.get(jti);
         if (StringUtils.isBlank(jwt)) {
             // 过期
-            final R r = R.error("授权已过期!");
-            return this.result(exchange, r, HttpStatus.UNAUTHORIZED);
+//            final R r = R.error("授权已过期!");
+//            return this.result(exchange, r, HttpStatus.UNAUTHORIZED);
+            return this.toLoginPage(exchange,LOGIN_URL + "?from" + "=" + path);
         }
         // 携带令牌,到达微服务
         request.mutate().header("Authorization", "Bearer " + jwt);
         return chain.filter(exchange);
+    }
+
+    private Mono<Void> toLoginPage(ServerWebExchange exchange,String loginUrl) {
+        final ServerHttpResponse response = exchange.getResponse();
+        response.setStatusCode(HttpStatus.SEE_OTHER);
+        response.getHeaders().set("Location",loginUrl);
+        return response.setComplete();
     }
 
     @Override

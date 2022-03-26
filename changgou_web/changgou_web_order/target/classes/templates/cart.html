@@ -2,17 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
-	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+	<meta charset="utf-8"/>
+	<meta content="IE=9; IE=8; IE=7; IE=EDGE" http-equiv="X-UA-Compatible">
+	<meta content="IE=EmulateIE7" http-equiv="X-UA-Compatible"/>
 	<title>我的购物车</title>
-	<link rel="icon" href="/img/favicon.ico">
+	<link href="/img/favicon.ico" rel="icon">
 
 	<!-- 引入样式 -->
-	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-	<link rel="stylesheet" type="text/css" href="/css/all.css" />
-	<link rel="stylesheet" type="text/css" href="/css/pages-cart.css" />
-	
+	<link href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" rel="stylesheet">
+	<link href="/css/all.css" rel="stylesheet" type="text/css"/>
+	<link href="/css/pages-cart.css" rel="stylesheet" type="text/css"/>
+
 	<!-- 引入组件库 -->
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="https://cdn.bootcss.com/element-ui/2.5.4/index.js"></script>
@@ -87,14 +87,14 @@
 				<div class="py-container">
 					<div class="yui3-g Logo">
 						<div class="yui3-u Left logoArea">
-							<a class="logo-bd" title="畅购" href="index.html" target="_blank"></a>
+							<a class="logo-bd" href="index.html" target="_blank" title="畅购"></a>
 						</div>
 						<div class="yui3-u Rit searchArea">
 							<div class="search">
 								<form action="" class="sui-form form-inline">
 									<!--searchAutoComplete-->
 									<div class="input-append">
-										<input id="autocomplete" type="text" class="input-error input-xxlarge" />
+										<input class="input-error input-xxlarge" id="autocomplete" type="text"/>
 										<button class="sui-btn btn-xlarge btn-danger" type="button">搜索</button>
 									</div>
 								</form>
@@ -118,7 +118,8 @@
 			<div class="cart-main">
 				<div class="yui3-g cart-th">
 					<div class="yui3-u-1-4">
-						<input class="chooseAll" type="checkbox" name="" id="" value="" /> 全部</div>
+						<input class="chooseAll" id="" name="" type="checkbox" value=""/> 全部
+					</div>
 					<div class="yui3-u-1-4">商品</div>
 					<div class="yui3-u-1-8">单价（元）</div>
 					<div class="yui3-u-1-8">数量</div>
@@ -128,32 +129,34 @@
 				<div class="cart-item-list" >
 					<div class="cart-body">
 						<!-- vue loadlist -->
-						<div class="cart-list" >
+						<div :key="item.index" class="cart-list" v-for="item in items.orderItemList">
 							<ul class="goods-list yui3-g">
 								<li class="yui3-u-1-24">
-									<input type="checkbox" name="chk_list" id="" value="" />
+									<input id="" name="chk_list" type="checkbox" value=""/>
 								</li>
 								<li class="yui3-u-6-24">
 									<div class="good-item">
 										<div class="item-img">
-											<img src="/img/goods.png" />
+											<img :src="item.image"/>
 										</div>
-										<div class="item-msg">vivo X23 8GB+128GB 幻夜蓝 水滴屏全面屏 游戏手机 移动联通电信全网通4G手机</div>
+										<div class="item-msg">{{item.name}}</div>
 									</div>
 								</li>
 								<li class="yui3-u-5-24">
-									<div class="item-txt">vivo X23 8GB+128GB 幻夜蓝 水滴屏全面屏 游戏手机 移动联通电信全网通4G手机</div>
+									<div class="item-txt">{{item.name}}</div>
 								</li>
 								<li class="yui3-u-1-8">
-									<span class="price">118</span>
+									<span class="price">{{item.price}}</span>
 								</li>
 								<li class="yui3-u-1-8">
-									<a href="javascript:void(0)" class="increment mins">-</a>
-									<input autocomplete="off" type="text" value="1" minnum="1" class="itxt" />
-									<a href="javascript:void(0)" class="increment plus">+</a>
+									<a @click="add(item.skuId,-1)" class="increment mins">-</a>
+									<input @blur="add(item.skuId,item.num)" autocomplete="off" class="itxt" minnum="1"
+										   type="text"
+										   v-model="item.num" value="1"/>
+									<a @click="add(item.skuId,1)" class="increment plus">+</a>
 								</li>
 								<li class="yui3-u-1-8">
-									<span class="sum">8848.00</span>
+									<span class="sum">{{item.num * item.price}}.00</span>
 								</li>
 								<li class="yui3-u-1-8">
 									<a href="#none">删除</a>
@@ -168,7 +171,7 @@
 			</div>
 			<div class="cart-tool">
 				<div class="select-all">
-					<input class="chooseAll" type="checkbox" name="" id="" value="" />
+					<input class="chooseAll" id="" name="" type="checkbox" value=""/>
 					<span>全选</span>
 				</div>
 				<div class="option">
@@ -178,11 +181,12 @@
 				</div>
 				<div class="money-box">
 					<div class="chosed">已选择
-						<span>0</span>件商品</div>
+						<span>{{items.totalNum}}</span>件商品
+					</div>
 					<div class="sumprice">
 						<span>
 							<em>总价（不含运费） ：</em>
-							<i class="summoney">¥16283.00</i>
+							<i class="summoney">¥{{items.totalMoney}}.00</i>
 						</span>
 						<span>
 							<em>已节省：</em>
@@ -198,21 +202,21 @@
 			<div class="liked">
 				<ul class="sui-nav nav-tabs">
 					<li class="active">
-						<a href="#index" data-toggle="tab">猜你喜欢</a>
+						<a data-toggle="tab" href="#index">猜你喜欢</a>
 					</li>
 					<li>
-						<a href="#profile" data-toggle="tab">特惠换购</a>
+						<a data-toggle="tab" href="#profile">特惠换购</a>
 					</li>
 				</ul>
 				<div class="clearfix"></div>
 				<div class="tab-content">
-					<div id="index" class="tab-pane active">
-						<div id="myCarousel" data-ride="carousel" data-interval="4000" class="sui-carousel slide">
+					<div class="tab-pane active" id="index">
+						<div class="sui-carousel slide" data-interval="4000" data-ride="carousel" id="myCarousel">
 							<div class="carousel-inner">
 								<div class="active item">
 									<ul>
 										<li>
-											<img src="/img/like1.png" />
+											<img src="/img/like1.png"/>
 											<div class="intro">
 												<i>Apple苹果iPhone 6s (A1699)</i>
 											</div>
@@ -220,7 +224,7 @@
 												<span>$29.00</span>
 											</div>
 											<div class="incar">
-												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default">
+												<a class="sui-btn btn-bordered btn-xlarge btn-default" href="#">
 													<i class="car"></i>
 													<span class="cartxt">加入购物车</span>
 												</a>
@@ -235,7 +239,7 @@
 												<span>$29.00</span>
 											</div>
 											<div class="incar">
-												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default">
+												<a class="sui-btn btn-bordered btn-xlarge btn-default" href="#">
 													<i class="car"></i>
 													<span class="cartxt">加入购物车</span>
 												</a>
@@ -250,7 +254,7 @@
 												<span>$29.00</span>
 											</div>
 											<div class="incar">
-												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default">
+												<a class="sui-btn btn-bordered btn-xlarge btn-default" href="#">
 													<i class="car"></i>
 													<span class="cartxt">加入购物车</span>
 												</a>
@@ -265,7 +269,7 @@
 												<span>$29.00</span>
 											</div>
 											<div class="incar">
-												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default">
+												<a class="sui-btn btn-bordered btn-xlarge btn-default" href="#">
 													<i class="car"></i>
 													<span class="cartxt">加入购物车</span>
 												</a>
@@ -284,7 +288,7 @@
 												<span>$29.00</span>
 											</div>
 											<div class="incar">
-												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default">
+												<a class="sui-btn btn-bordered btn-xlarge btn-default" href="#">
 													<i class="car"></i>
 													<span class="cartxt">加入购物车</span>
 												</a>
@@ -299,7 +303,7 @@
 												<span>$29.00</span>
 											</div>
 											<div class="incar">
-												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default">
+												<a class="sui-btn btn-bordered btn-xlarge btn-default" href="#">
 													<i class="car"></i>
 													<span class="cartxt">加入购物车</span>
 												</a>
@@ -314,7 +318,7 @@
 												<span>$29.00</span>
 											</div>
 											<div class="incar">
-												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default">
+												<a class="sui-btn btn-bordered btn-xlarge btn-default" href="#">
 													<i class="car"></i>
 													<span class="cartxt">加入购物车</span>
 												</a>
@@ -329,7 +333,7 @@
 												<span>$29.00</span>
 											</div>
 											<div class="incar">
-												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default">
+												<a class="sui-btn btn-bordered btn-xlarge btn-default" href="#">
 													<i class="car"></i>
 													<span class="cartxt">加入购物车</span>
 												</a>
@@ -338,11 +342,11 @@
 									</ul>
 								</div>
 							</div>
-							<a href="#myCarousel" data-slide="prev" class="carousel-control left">‹</a>
-							<a href="#myCarousel" data-slide="next" class="carousel-control right">›</a>
+							<a class="carousel-control left" data-slide="prev" href="#myCarousel">‹</a>
+							<a class="carousel-control right" data-slide="next" href="#myCarousel">›</a>
 						</div>
 					</div>
-					<div id="profile" class="tab-pane">
+					<div class="tab-pane" id="profile">
 						<p>特惠选购</p>
 					</div>
 				</div>
@@ -500,7 +504,7 @@
 		</div>
 	</div>
 	<!--页面底部END-->
-	<script type="text/javascript" src="/js/plugins/jquery/jquery.min.js"></script>
+	<script src="/js/plugins/jquery/jquery.min.js" type="text/javascript"></script>
 	
 	
 
@@ -510,24 +514,29 @@
 			$("input[name='chk_list']").prop("checked", $(this).prop("checked"));
 		})
 	</script>
-	<script>
+	<script th:inline="javascript">
 		new Vue({
 			el: '#app',
 			data() {
 				return {
-					shopcarlist: [{
-						intro: '米家（MIJIA） 小米小白智能摄像机增强版 1080p高清360度全景拍摄AI增强',
-						property: '语音升级款',
-						price: '399.00'
-					}, {
-						intro: '米家（MIJIA） 小米小白智能摄像机增强版 1080p高清360度全景拍摄AI增强',
-						property: '语音升级款',
-						price: '399.00'
-					}, {
-						intro: '米家（MIJIA） 小米小白智能摄像机增强版 1080p高清360度全景拍摄AI增强',
-						property: '语音升级款',
-						price: '399.00'
-					}]
+					items: [[${items}]]
+				}
+			},
+			methods: {
+				add(skuId, num) {
+					axios({
+						url: '/api/wcart/add',
+						method: 'post',
+						params: {
+							id: skuId,
+							num: num
+						},
+						responseType: 'json'
+					}).then(({data}) => {
+						if (data.flag) {
+							this.items = data.data;
+						}
+					})
 				}
 			}
 		})

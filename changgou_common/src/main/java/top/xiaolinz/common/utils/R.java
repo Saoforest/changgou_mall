@@ -91,9 +91,9 @@ public class R extends LinkedHashMap<String, Object> {
 
         if (data != null) {
             final String json = JSONUtil.toJsonStr(data);
-            return JSONUtil.toBean(json, typeReference, true);
+            return JSONUtil.toBean(json, typeReference, false);
         }
-        return JSONUtil.toBean("", typeReference, true);
+        return JSONUtil.toBean("", typeReference, false);
     }
 
     /**

@@ -24,7 +24,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/oauth/login", "/oauth/logout", "/login.html", "/css/**", "/data/**", "/fonts/**",
+        web.ignoring().antMatchers("/oauth/login", "/oauth/logout", "/oauth/login.html", "/css/**", "/data/**", "/fonts/**",
             "/img/**", "/js/**");
     }
 

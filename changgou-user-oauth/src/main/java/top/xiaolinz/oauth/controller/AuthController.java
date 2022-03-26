@@ -5,10 +5,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import top.xiaolinz.common.exception.BusinessException;
 import top.xiaolinz.common.utils.R;
@@ -21,7 +20,7 @@ import top.xiaolinz.oauth.util.CookieUtil;
  * @date 2022/3/22 17:30
  * @blog https://www.xiaolinz.top/
  **/
-@RestController
+@Controller
 @RequestMapping("/oauth")
 public class AuthController {
 
@@ -41,6 +40,7 @@ public class AuthController {
     private int cookieMaxAge;
 
     @PostMapping("/login")
+    @ResponseBody
     public R login(@RequestParam String username, @RequestParam String password, HttpServletResponse response) {
         if (StringUtils.isBlank(username)) {
             throw new BusinessException("请输入用户名");
@@ -60,5 +60,11 @@ public class AuthController {
 
     public void saveCookie(String jti, HttpServletResponse response) {
         CookieUtil.addCookie(response, this.cookieDomain, "/", "uid", jti, this.cookieMaxAge, false);
+    }
+
+    @GetMapping("/login.html")
+    public String login(@RequestParam(value = "from",required = false,defaultValue = "") String url, Model model){
+        model.addAttribute("from",url);
+        return "login";
     }
 }

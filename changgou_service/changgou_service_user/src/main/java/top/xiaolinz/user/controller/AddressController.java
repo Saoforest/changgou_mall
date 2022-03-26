@@ -1,10 +1,14 @@
 package top.xiaolinz.user.controller;
 
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import io.swagger.annotations.*;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+
+import io.swagger.annotations.*;
 import top.xiaolinz.common.group.UpdateGroup;
 import top.xiaolinz.common.utils.R;
 import top.xiaolinz.common.utils.StatusCode;
@@ -12,8 +16,6 @@ import top.xiaolinz.common_db.utils.PageResult;
 import top.xiaolinz.user_api.entity.Address;
 import top.xiaolinz.user_api.service.AddressService;
 import top.xiaolinz.user_api.vo.PageAddressRequestVo;
-
-import java.util.List;
 
 
 /**
@@ -107,5 +109,11 @@ public class AddressController {
 		final PageResult<Address> data = this.addressService.findByPageAndCondition(vo);
 
 		return R.ok(StatusCode.OK,"查询成功").put("data",data);
+	}
+	@GetMapping("/user/list")
+	public R findAddress(){
+		final List<Address> list = this.addressService.findAddressListByUsername();
+
+		return R.ok(StatusCode.OK,"查询成功").put("data",list);
 	}
 }

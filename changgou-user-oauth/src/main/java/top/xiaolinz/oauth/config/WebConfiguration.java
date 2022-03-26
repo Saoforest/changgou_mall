@@ -13,6 +13,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfiguration implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/oauth/login.html").setViewName("login");
+//        registry.addViewController("/oauth/login.html").setViewName("login");
     }
 }

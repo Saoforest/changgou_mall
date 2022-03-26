@@ -208,7 +208,8 @@
             return {
                 username: "",
                 password: "",
-                msg: ""
+                msg: "",
+                url: [[${from}]]
             }
         },
         methods: {
@@ -223,6 +224,7 @@
                 }).then(({data}) => {
                     if (data.flag) {
                         this.msg = "登录成功";
+                        location.href = this.url;
                     } else {
                         this.msg = "登录失败";
                     }

@@ -26,32 +26,46 @@ import top.xiaolinz.order_api.service.CartService;
 public class CartServiceImpl implements CartService {
 
     public static final String CART = "cart:CART_";
+
     @Autowired
     private SkuFeign skuFeign;
+
     @Autowired
     private RedisUtils redisUtils;
+
     @Autowired
     private SpuFeign spuFeign;
 
     @Override
     public void addCart(String skuId, Integer num, String username) {
+
         // 购物车已有,更新数量
         OrderItem orderItem = (OrderItem)this.redisUtils.hget(CART + username, skuId);
+
         if (orderItem != null) {
             orderItem.setNum(orderItem.getNum() + num);
+            if (orderItem.getNum() < 1) {
+                // 删除该商品
+                this.redisUtils.hdel(CART + username, skuId);
+                return;
+            }
             orderItem.setMoney(orderItem.getPrice() * orderItem.getNum());
             orderItem.setPayMoney(orderItem.getPrice() * orderItem.getNum());
         } else {
+
             // 不存在,新增商品
             // 获取商品信息
             final Sku sku = this.skuFeign.findById(skuId).getData("data", Sku.class);
+
             // 获取spu信息
             final Spu spu = this.spuFeign.findSpuById(sku.getSpuId()).getData("data", Spu.class);
 
             // 封装orderItem
             orderItem = this.goodToOrderItem(sku, spu, num);
         }
+
         this.redisUtils.hset(CART + username, skuId, orderItem);
+
     }
 
     @Override
@@ -87,6 +101,7 @@ public class CartServiceImpl implements CartService {
      * @return orderItem对象
      */
     private OrderItem goodToOrderItem(Sku sku, Spu spu, Integer num) {
+
         final OrderItem item = new OrderItem();
         item.setSpuId(spu.getId());
         item.setSkuId(sku.getId());
