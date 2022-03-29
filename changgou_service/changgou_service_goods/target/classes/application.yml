@@ -19,6 +19,16 @@ spring:
       filter:
         commons-log:
           enabled: true
+  redis:
+    host: 10.211.55.6
+    port: 6380
+    lettuce:
+      pool:
+        max-active: 50
+        max-wait: 60000
+        max-idle: 25
+        min-idle: 25
+
 feign:
   hystrix:
     enabled: true

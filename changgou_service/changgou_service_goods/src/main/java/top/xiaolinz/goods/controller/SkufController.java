@@ -119,4 +119,12 @@ public class SkufController {
 
         return R.ok(StatusCode.OK, "查询成功").put("data", skus);
     }
+
+	@PostMapping("/decr/count")
+	@ApiOperation(value = "减少商品库存")
+	public R decrCount(){
+		this.skuService.decrCount();
+
+		return R.ok(StatusCode.OK, "库存减少成功");
+	}
 }

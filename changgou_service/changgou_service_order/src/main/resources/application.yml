@@ -23,6 +23,7 @@ spring:
         max-active: 50
         min-idle: 10
         max-wait: 150000
+        max-idle: 30
 eureka:
   client:
     service-url:

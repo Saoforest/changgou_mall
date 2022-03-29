@@ -3,6 +3,7 @@ package top.xiaolinz.goods_api.feign;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import top.xiaolinz.common.utils.R;
 
@@ -19,5 +20,9 @@ public interface SkuFeign {
 
     @GetMapping("/sku/{skuId}")
     public R findById(@PathVariable("skuId") String skuId);
+
+    @PostMapping("/sku/decr/count")
+    public R decrCount();
+
 
 }

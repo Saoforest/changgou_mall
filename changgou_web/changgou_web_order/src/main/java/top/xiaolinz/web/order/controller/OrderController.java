@@ -6,10 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import cn.hutool.core.lang.TypeReference;
 import top.xiaolinz.common.utils.R;
@@ -73,9 +70,10 @@ public class OrderController {
      * 生成订单
      */
     @PostMapping("/add")
+    @ResponseBody
     public R addOrder(@RequestBody Order order){
         final R r = this.orderFeign.addOrder(order);
-
         return r;
+
     }
 }

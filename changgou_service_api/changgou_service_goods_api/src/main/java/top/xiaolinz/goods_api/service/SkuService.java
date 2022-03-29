@@ -81,5 +81,7 @@ public interface SkuService extends IService<Sku> {
      * @return sku集合
      */
     List<Sku> findSkuListBySpuId(String spuId);
+
+	void decrCount();
 }
 

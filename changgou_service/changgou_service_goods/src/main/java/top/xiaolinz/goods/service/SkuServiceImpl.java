@@ -3,22 +3,30 @@ package top.xiaolinz.goods.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
+import top.xiaolinz.common.exception.BusinessException;
+import top.xiaolinz.common.utils.RedisUtils;
+import top.xiaolinz.common.utils.StatusCode;
 import top.xiaolinz.common_db.constant.PageConstant;
 import top.xiaolinz.common_db.utils.PageResult;
 import top.xiaolinz.common_db.utils.Query;
 import top.xiaolinz.goods.mapper.SkuMapper;
+import top.xiaolinz.goods.utils.TokenDecode;
 import top.xiaolinz.goods_api.entity.Sku;
 import top.xiaolinz.goods_api.service.SkuService;
 import top.xiaolinz.goods_api.vo.PageSkuRequestVo;
+import top.xiaolinz.order_api.entity.OrderItem;
 
 /**
  * @author XiaoLin
@@ -27,6 +35,12 @@ import top.xiaolinz.goods_api.vo.PageSkuRequestVo;
  **/
 @Service
 public class SkuServiceImpl extends ServiceImpl<SkuMapper, Sku> implements SkuService {
+
+	private static final String CART = "cart:CART_";
+	@Autowired
+	private TokenDecode tokenDecode;
+	@Autowired
+	private RedisUtils redisUtils;
 
 	@Override
 	public List<Sku> findAll() {
@@ -108,6 +122,19 @@ public class SkuServiceImpl extends ServiceImpl<SkuMapper, Sku> implements SkuSe
         return this.list(wrapper);
     }
 
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void decrCount() {
+		final Map<String, String> userInfo = this.tokenDecode.getUserInfo();
+		final String username = userInfo.get("username");
+		final List<Object> cart = this.redisUtils.hget(CART + username);
+		for (Object o : cart) {
+			final int i = this.baseMapper.decrCount((OrderItem)o);
+			if (i < 0){
+				throw new BusinessException(StatusCode.ERROR,"库存不足");
+			}
+		}
+	}
 
 	/**
 	 * 多条件检索构造

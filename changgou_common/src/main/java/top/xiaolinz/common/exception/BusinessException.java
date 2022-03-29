@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import top.xiaolinz.common.constant.ExceptionEnum;
 import top.xiaolinz.common.constant.ResponseEnum;
+import top.xiaolinz.common.utils.R;
 
 /**
  * @author XiaoLin
@@ -83,5 +84,10 @@ public class BusinessException extends RuntimeException{
         super(cause);
         this.message = resultCodeEnum.getMessage();
         this.code = resultCodeEnum.getCode();
+    }
+
+    public BusinessException(R r){
+        this.message = (String)r.get("msg");
+        this.code = (Integer)r.get("code");
     }
 }

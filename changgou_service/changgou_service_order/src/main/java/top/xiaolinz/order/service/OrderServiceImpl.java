@@ -6,16 +6,20 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
+import top.xiaolinz.common.exception.BusinessException;
+import top.xiaolinz.common.utils.R;
 import top.xiaolinz.common.utils.RedisUtils;
 import top.xiaolinz.common_db.constant.PageConstant;
 import top.xiaolinz.common_db.utils.PageResult;
 import top.xiaolinz.common_db.utils.Query;
+import top.xiaolinz.goods_api.feign.SkuFeign;
 import top.xiaolinz.order.mapper.OrderMapper;
 import top.xiaolinz.order_api.entity.Order;
 import top.xiaolinz.order_api.entity.OrderItem;
@@ -41,6 +45,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 	private OrderItemService orderItemService;
 	@Autowired
 	private RedisUtils redisUtils;
+
+	@Autowired
+	private SkuFeign skuFeign;
 
 	@Override
 	public List<Order> findAll() {
@@ -84,14 +91,19 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 		final CopyOnWriteArrayList<OrderItem> list = new CopyOnWriteArrayList<>(orderItemList);
 		list.parallelStream().forEach(orderItem -> {
 			orderItem.setIsReturn("0");
-			orderItem.setOrderId(orderItem.getId());
+			orderItem.setOrderId(order.getId());
 			this.orderItemService.addOrderItem(orderItem);
+
 		});
 
 //		减少库存
+		final R r = this.skuFeign.decrCount();
+		if (!(boolean)r.get("flag")){
+			throw new BusinessException(r);
+		}
 
 //		从redis中删除购物车商品
-		this.redisUtils.hdel(CART + order.getUsername());
+		this.redisUtils.del(CART + order.getUsername());
 
 	}
 
@@ -133,6 +145,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public PageResult<Order> findByPageAndCondition(PageOrderRequestVo vo) {
 		final HashMap<String, Object> map = new HashMap<>();
 		map.put(PageConstant.PAGE, vo.getPage());
