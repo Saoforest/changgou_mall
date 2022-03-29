@@ -1,19 +1,22 @@
 package top.xiaolinz.order.controller;
 
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import io.swagger.annotations.*;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+
+import io.swagger.annotations.*;
 import top.xiaolinz.common.group.UpdateGroup;
 import top.xiaolinz.common.utils.R;
 import top.xiaolinz.common.utils.StatusCode;
 import top.xiaolinz.common_db.utils.PageResult;
+import top.xiaolinz.order.utils.TokenDecode;
 import top.xiaolinz.order_api.entity.Order;
 import top.xiaolinz.order_api.service.OrderService;
 import top.xiaolinz.order_api.vo.PageOrderRequestVo;
-
-import java.util.List;
 
 
 /**
@@ -27,6 +30,9 @@ import java.util.List;
 public class OrderfController {
 	@Autowired
 	private OrderService orderService;
+
+	@Autowired
+	private TokenDecode tokenDecode;
 
 	/**
 	 * 查询所有order
@@ -62,6 +68,8 @@ public class OrderfController {
 	@PostMapping("/save")
 	@ApiOperation(value = "添加order")
 	public R addOrder(@RequestBody Order order){
+		final String username = this.tokenDecode.getUserInfo().get("username");
+		order.setUsername(username);
 		this.orderService.addOrder(order);
 		return R.ok(StatusCode.OK,"添加成功");
 	}

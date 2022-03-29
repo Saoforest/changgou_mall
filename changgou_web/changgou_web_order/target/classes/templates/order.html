@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
-	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+	<meta content="IE=9; IE=8; IE=7; IE=EDGE" http-equiv="X-UA-Compatible">
+	<meta content="IE=EmulateIE7" http-equiv="X-UA-Compatible" />
 	<title>结算页</title>
-    <link rel="stylesheet" type="text/css" href="./css/all.css" />
-    <link rel="stylesheet" type="text/css" href="./css/pages-getOrderInfo.css" />
+    <link href="/css/all.css" rel="stylesheet" type="text/css" />
+    <link href="/css/pages-getOrderInfo.css" rel="stylesheet" type="text/css" />
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
 </head>
 
 <body>
@@ -48,14 +49,14 @@
 			<div class="py-container">
 				<div class="yui3-g Logo">
 					<div class="yui3-u Left logoArea">
-						<a class="logo-bd" title="青橙" href="index.html" target="_blank"></a>
+						<a class="logo-bd" href="index.html" target="_blank" title="青橙"></a>
 					</div>
 					<div class="yui3-u Rit searchArea">
 						<div class="search">
 							<form action="" class="sui-form form-inline">
 								<!--searchAutoComplete-->
 								<div class="input-append">
-									<input type="text" id="autocomplete" class="input-error input-xxlarge" />
+									<input class="input-error input-xxlarge" id="autocomplete" type="text" />
 									<button class="sui-btn btn-xlarge btn-danger" type="button">搜索</button>
 								</div>
 							</form>
@@ -70,7 +71,7 @@
 </div>
 
 
-	<div class="cart py-container">
+	<div class="cart py-container" id="app">
 		<!--主内容-->
 		<div class="checkout py-container">
 			<div class="checkout-tit">
@@ -85,31 +86,14 @@
 					<div class="addressInfo">
 						<ul class="addr-detail">
 							<li class="addr-item">
-								<div class="choose-address">
-									<div class="con name selected"><a href="javascript:;" >李煜<span title="点击取消选择"></span></a></div>
+								<div class="choose-address" th:each="address:${address}" th:inline="text">
+									<div class="con name" th:@click="|chooseAddr('${address.contact}','${address.phone}','${address.address}')|" th:classappend="${address.isDefault} == 1 ? 'selected' : ''"><a href="javascript:;" >[[${address.contact}]]<span title="点击取消选择"></span></a></div>
 									<div class="con address">
-										<span class="place">北京市海淀区三环内中关村软件园9号楼</span> 
-										<span class="phone">15932223201</span>
-										<span class="base">默认地址</span>
+										<span class="place">[[${address.address}]]</span>
+										<span class="phone">[[${address.phone}]]</span>
+										<span class="base" th:if="${address.isDefault}  == 1">默认地址</span>
 									</div>	
 									<div class="clearfix"></div>									
-								</div>
-								
-								<div class="choose-address">
-									<div class="con name"><a href="javascript:;">李西西<span title="点击取消选择"></span></a></div>
-									<div class="con address">
-										<span class="place">北京市昌平区建材城西路金燕龙办公楼</span> 
-										<span class="phone">18545692564</span>
-									</div>
-									<div class="clearfix"></div>
-								</div>
-								
-								<div class="choose-address">
-									<div class="con name"><a href="javascript:;">王希<span title="点击取消选择"></span></a></div>
-									<div class="con address">
-										<span class="place">河北省衡水市大庆西路888号</span> 
-										<span class="phone">18758946254</span>
-									</div>
 								</div>
 							</li>							
 						</ul>						
@@ -124,8 +108,8 @@
 					</div>
 					<div class="step-cont">
 						<ul class="payType">
-							<li class="selected">在线支付<span title="点击取消选择"></span></li>
-							<li>货到付款<span title="点击取消选择"></span></li>
+							<li class="selected" th:@click="|order.payType=1|">在线支付<span title="点击取消选择"></span></li>
+							<li th:@click="|order.payType=0|">货到付款<span title="点击取消选择"></span></li>
 						</ul>
 					</div>
 					<div class="hr"></div>
@@ -146,39 +130,19 @@
 								</div>
 								<div class="sendGoods">
 									<span>商品清单：</span>
-									<ul class="yui3-g">
+									<ul class="yui3-g" th:each="goods:${carts}" th:inline="text">
 										<li class="yui3-u-1-6">
-											<span><img src="./img/goods.png"/></span>
+											<span><img th:src="${goods.image}"/></span>
 										</li>
 										<li class="yui3-u-7-12">
-											<div class="desc">Apple iPhone 6s (A1700) 64G 玫瑰金色 移动联通电信4G手机硅胶透明防摔软壳 本色系列</div>
+											<div class="desc">[[${goods.name}]]</div>
 											<div class="seven">7天无理由退货</div>
 										</li>
 										<li class="yui3-u-1-12">
-											<div class="price">￥5399.00</div>
+											<div class="price">￥[[${goods.price}]].00</div>
 										</li>
 										<li class="yui3-u-1-12">
-											<div class="num">X1</div>
-										</li>
-										<li class="yui3-u-1-12">
-											<div class="exit">有货</div>
-										</li>
-										
-										
-									</ul>
-									<ul class="yui3-g">
-										<li class="yui3-u-1-6">
-											<span><img src="./img/goods.png"/></span>
-										</li>
-										<li class="yui3-u-7-12">
-											<div class="desc">Apple iPhone 6s (A1700) 64G 玫瑰金色 移动联通电信4G手机硅胶透明防摔软壳 本色系列</div>
-											<div class="seven">7天无理由退货</div>
-										</li>
-										<li class="yui3-u-1-12">
-											<div class="price">￥5399.00</div>
-										</li>
-										<li class="yui3-u-1-12">
-											<div class="num">X1</div>
+											<div class="num">X[[${goods.num}]]</div>
 										</li>
 										<li class="yui3-u-1-12">
 											<div class="exit">有货</div>
@@ -189,7 +153,7 @@
 								</div>
 								<div class="buyMessage">
 									<span>买家留言：</span>
-									<textarea placeholder="建议留言前先与商家沟通确认" class="remarks-cont"></textarea>
+									<textarea class="remarks-cont" placeholder="建议留言前先与商家沟通确认"></textarea>
 								</div>
 							</li>
 							<li></li>
@@ -219,8 +183,8 @@
 		<div class="order-summary">
 			<div class="static fr">
 				<div class="list">
-					<span><i class="number">1</i>件商品，总商品金额</span>
-					<em class="allprice">¥5399.00</em>
+					<span><i class="number">[[${totalNum}]]</i>件商品，总商品金额</span>
+					<em class="allprice">¥[[${totalMoney}]].00</em>
 				</div>
 				<div class="list">
 					<span>返现：</span>
@@ -233,16 +197,16 @@
 			</div>
 		</div>
 		<div class="clearfix trade">
-			<div class="fc-price">应付金额:　<span class="price">¥5399.00</span></div>
+			<div class="fc-price">应付金额:　<span class="price">¥[[${totalMoney}]].00</span></div>
 			<div class="fc-receiverInfo">
 				寄送至:
-				<span id="receive-address">北京市海淀区三环内中关村软件园9号楼</span> 
-				收货人：<span id="receive-name">冯提莫</span>
-				<span id="receive-phone">15922333201</span>
+				<span id="receive-address">{{order.receiveAddress}}</span>
+				收货人：<span id="receive-name">{{order.receiveContact}}</span>
+				<span id="receive-phone">{{order.receiveMobile}}</span>
 			</div>
 		</div>
 		<div class="submit">
-			<a class="sui-btn btn-danger btn-xlarge" href="pay.html">提交订单</a>
+			<a @click="" class="sui-btn btn-danger btn-xlarge" href="javascript:void(0)">提交订单</a>
 		</div>
 	</div>
 	<!-- 底部栏位 -->
@@ -378,7 +342,7 @@
 	</div>
 </div>
 <!--页面底部END-->
-<script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+<script src="/js/plugins/jquery/jquery.min.js" type="text/javascript"></script>
 
 <script>
 
@@ -406,7 +370,40 @@ $(function(){
 
 
 </script>
-
+<script th:inline="javascript">
+	new Vue({
+		el: "#app",
+		data(){
+			return {
+				order:{
+					receiveContact: "",
+					receiveMobile: "",
+					receiveAddress: "",
+					payType: 1
+				}
+			}
+		},
+		methods: {
+			chooseAddr(contact,mobile,address){
+				this.$set(this.order,"receiveContact",contact,"receiveMobile",mobile, "receiveAddress",address);
+			},
+			addOrder(){
+				axios.post("/api/worder/add",this.order).then(({data}) => {
+					if (data.flag) {
+						alert("添加订单成功");
+                    }else {
+                        alert("添加订单失败");
+                    }
+				})
+			}
+		},
+		created(){
+			this.order.receiveContact = [[${deAddr.contact}]];
+			this.order.receiveMobile = [[${deAddr.phone}]];
+			this.order.receiveAddress = [[${deAddr.address}]];
+		}
+	})
+</script>
 </body>
 
 </html>

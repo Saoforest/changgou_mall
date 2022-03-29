@@ -108,7 +108,7 @@ public class AddressServiceImpl extends ServiceImpl<AddressMapper, Address> impl
 	@Override public List<Address> findAddressListByUsername() {
 		final Map<String, String> userInfo = this.tokenDecode.getUserInfo();
 		final String username = userInfo.get("username");
-		final List<Address> list = this.list(new QueryWrapper<Address>().eq("username", this.list(new QueryWrapper<Address>().eq("username",username))));
+		final List<Address> list = this.list(new QueryWrapper<Address>().eq("username",username));
 
 		return list;
 	}

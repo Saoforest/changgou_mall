@@ -1,23 +1,28 @@
 package top.xiaolinz.order.service;
 
+import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
+import top.xiaolinz.common.utils.RedisUtils;
 import top.xiaolinz.common_db.constant.PageConstant;
 import top.xiaolinz.common_db.utils.PageResult;
 import top.xiaolinz.common_db.utils.Query;
 import top.xiaolinz.order.mapper.OrderMapper;
 import top.xiaolinz.order_api.entity.Order;
-import top.xiaolinz.order_api.entity.Order;
+import top.xiaolinz.order_api.entity.OrderItem;
+import top.xiaolinz.order_api.service.CartService;
+import top.xiaolinz.order_api.service.OrderItemService;
 import top.xiaolinz.order_api.service.OrderService;
 import top.xiaolinz.order_api.vo.PageOrderRequestVo;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
 * 
@@ -28,6 +33,15 @@ import java.util.List;
 **/
 @Service
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements OrderService{
+
+	public static final String CART = "cart:CART_";
+	@Autowired
+	private CartService cartService;
+	@Autowired
+	private OrderItemService orderItemService;
+	@Autowired
+	private RedisUtils redisUtils;
+
 	@Override
 	public List<Order> findAll() {
 
@@ -44,7 +58,41 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 
 	@Override
 	public void addOrder(Order order) {
+//		this.save(order);
+//		获取商品数据,获取购物车中的数据
+		final Map<String, Object> map = this.cartService.getCartList(order.getUsername());
+		final List<OrderItem> orderItemList = (List<OrderItem>)map.get("orderItemList");
+
+		//		统计支付总金额,商品总数量
+		order.setTotalNum((Integer)map.get("totalNum"));
+		order.setTotalMoney((Integer)map.get("totalMoney"));
+		order.setPayMoney((Integer)map.get("totalMoney"));
+
+		order.setCreateTime(new Date());
+		order.setUpdateTime(new Date());
+		order.setBuyerRate("0"); // 0未评价 1已评价
+		order.setSourceType("1");
+
+		order.setOrderStatus("0");
+
+		order.setConsignStatus("0");
+
+		order.setPayStatus("0");
+
 		this.save(order);
+
+		final CopyOnWriteArrayList<OrderItem> list = new CopyOnWriteArrayList<>(orderItemList);
+		list.parallelStream().forEach(orderItem -> {
+			orderItem.setIsReturn("0");
+			orderItem.setOrderId(orderItem.getId());
+			this.orderItemService.addOrderItem(orderItem);
+		});
+
+//		减少库存
+
+//		从redis中删除购物车商品
+		this.redisUtils.hdel(CART + order.getUsername());
+
 	}
 
 	@Override
