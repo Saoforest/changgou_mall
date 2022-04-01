@@ -6,13 +6,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
+import io.seata.spring.annotation.GlobalTransactional;
 import top.xiaolinz.common.exception.BusinessException;
 import top.xiaolinz.common.utils.R;
 import top.xiaolinz.common.utils.RedisUtils;
@@ -64,6 +64,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 	}
 
 	@Override
+	@GlobalTransactional(name = "order_add",rollbackFor = Exception.class)   //使用Seata控制分布式事务
 	public void addOrder(Order order) {
 //		this.save(order);
 //		获取商品数据,获取购物车中的数据
@@ -101,6 +102,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 		if (!(boolean)r.get("flag")){
 			throw new BusinessException(r);
 		}
+
 
 //		从redis中删除购物车商品
 		this.redisUtils.del(CART + order.getUsername());
@@ -145,7 +147,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 	}
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
 	public PageResult<Order> findByPageAndCondition(PageOrderRequestVo vo) {
 		final HashMap<String, Object> map = new HashMap<>();
 		map.put(PageConstant.PAGE, vo.getPage());

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>changgou_parent</artifactId>
+        <groupId>top.xiaolinz</groupId>
+        <version>0.1</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>changgou_common_fescar</artifactId>
+    <properties>
+        <fescar.version>0.4.2</fescar.version>
+        <seata-spring-boot-starter.version>1.4.2</seata-spring-boot-starter.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>top.xiaolinz</groupId>
+            <artifactId>changgou_common</artifactId>
+            <version>0.1</version>
+        </dependency>
+        <!-- 分布式事务seata包 -->
+        <!--seata begin-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.seata</groupId>
+                    <artifactId>seata-spring-boot-starter</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>io.seata</groupId>
+            <artifactId>seata-spring-boot-starter</artifactId>
+            <version>${seata-spring-boot-starter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-client</artifactId>
+        </dependency>
+        <!--seata end-->
+    </dependencies>
+
+</project>

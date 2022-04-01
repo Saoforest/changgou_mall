@@ -1,23 +1,25 @@
 package top.xiaolinz.order.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
 import top.xiaolinz.common_db.constant.PageConstant;
 import top.xiaolinz.common_db.utils.PageResult;
 import top.xiaolinz.common_db.utils.Query;
 import top.xiaolinz.order.mapper.OrderItemMapper;
 import top.xiaolinz.order_api.entity.OrderItem;
-import top.xiaolinz.order_api.entity.OrderItem;
 import top.xiaolinz.order_api.service.OrderItemService;
 import top.xiaolinz.order_api.vo.PageOrderItemRequestVo;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
 * 
@@ -43,6 +45,7 @@ public class OrderItemServiceImpl extends ServiceImpl<OrderItemMapper, OrderItem
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void addOrderItem(OrderItem orderItem) {
 		this.save(orderItem);
 	}

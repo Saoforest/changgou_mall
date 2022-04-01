@@ -12,6 +12,11 @@
     <artifactId>changgou_service_order</artifactId>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-oauth2</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-oauth2</artifactId>
@@ -29,6 +34,11 @@
         <dependency>
             <groupId>top.xiaolinz</groupId>
             <artifactId>changgou_service_goods_api</artifactId>
+            <version>0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>top.xiaolinz</groupId>
+            <artifactId>changgou_common_fescar</artifactId>
             <version>0.1</version>
         </dependency>
     </dependencies>

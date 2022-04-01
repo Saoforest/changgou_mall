@@ -9,7 +9,7 @@ spring:
   application:
     name: order
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://10.211.55.6:3308/changgou_order?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: 990206
@@ -67,3 +67,24 @@ knife4j:
     footerCustomContent: Apache License 2.0 | Copyright  2022-[XiaoLin](https://www.xiaolinz.top)
 workerId: 0
 datacenterId: 0
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  tx-service-group: my_test_tx_group
+  enable-auto-data-source-proxy: true
+  registry:
+    nacos:
+      server-addr: 10.211.55.6:8848
+      username: nacos
+      password: nacos
+      application: seata-server
+      group: SEATA_GROUP
+      namespace:
+      cluster: default
+    type: nacos
+  config:
+    type: nacos
+    nacos:
+      server-addr: 10.211.55.6:8848
+      username: nacos
+      password: nacos

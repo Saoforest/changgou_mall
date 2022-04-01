@@ -61,3 +61,20 @@ knife4j:
     footerCustomContent: Apache License 2.0 | Copyright  2022-[XiaoLin](https://
 workerId: 0
 datacenterId: 0
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  tx-service-group: my_test_tx_group
+  enable-auto-data-source-proxy: true
+  registry:
+    nacos:
+      server-addr: 10.211.55.6:8848
+      username: nacos
+      password: nacos
+    type: nacos
+  config:
+    type: nacos
+    nacos:
+      server-addr: 10.211.55.6:8848
+      username: nacos
+      password: nacos
